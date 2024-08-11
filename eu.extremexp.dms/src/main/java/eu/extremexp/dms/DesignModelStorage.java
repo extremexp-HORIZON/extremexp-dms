@@ -1,8 +1,11 @@
 package eu.extremexp.dms;
 
+import org.eclipse.emf.ecore.EObject;
+
 public interface DesignModelStorage {
 
-    public Object get(String name, DesignModelStorageType kind) ;
+    public EObject get(String name) ;
 
-    public void put(String name, Object element, DesignModelStorageType kind) ;
+    public void put(String name, EObject element) ;
 }
+

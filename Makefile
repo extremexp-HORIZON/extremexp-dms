@@ -1,8 +1,7 @@
 DMS_DIR := ./eu.extremexp.dms
 FRAMEWORK_DIR := ./extremexp-dsl-framework
 
-
-.PHONY: all check-maven framework dms
+.PHONY: all check-maven framework dms clean
 
 all: check-maven framework dms
 
@@ -14,5 +13,14 @@ framework:
 	cd $(FRAMEWORK_DIR)/eu.extremexp.dsl.parent && mvn clean install
 
 dms:
-	cd $(DMS_DIR) && mvn clean package
+	cd $(DMS_DIR) && mvn clean install
 	cp $(DMS_DIR)/target/*.jar .
+
+clean:
+	@echo "Cleaning framework project..."
+	cd $(FRAMEWORK_DIR)/eu.extremexp.dsl.parent && mvn clean
+	@echo "Cleaning DMS project..."
+	cd $(DMS_DIR) && mvn clean
+	@echo "Removing copied JAR files..."
+	rm -f *.jar
+

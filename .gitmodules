@@ -1,0 +1,3 @@
+[submodule "extremexp-dsl-framework"]
+	path = extremexp-dsl-framework
+	url = https://colab-repo.intracom-telecom.com/colab-projects/extremexp/experiment-modelling/extremexp-dsl-framework.git

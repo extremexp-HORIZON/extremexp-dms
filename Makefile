@@ -9,7 +9,7 @@ check-maven:
 	@command -v mvn >/dev/null 2>&1 || { echo >&2 "Maven is not installed. Please install Maven and try again."; exit 1; }
 
 framework:
-	git submodule update --init --recursive $(FRAMEWORK_DIR)
+	git submodule update --init --recursive --merge $(FRAMEWORK_DIR)
 	cd $(FRAMEWORK_DIR)/eu.extremexp.dsl.parent && mvn clean install
 
 dms:

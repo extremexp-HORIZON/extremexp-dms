@@ -52,7 +52,7 @@ public class FileBasedDMS extends AbstractDMS {
                     this.put(model.getTask().getName(), model.getTask());
                 }
                 else{
-                    this.put(model.getPacakge().getName(), model.getPacakge());
+                    this.put(model.getPackage().getName(), model.getPackage());
                 }
 
             }

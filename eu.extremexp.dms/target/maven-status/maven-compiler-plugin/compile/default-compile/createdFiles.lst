@@ -1,0 +1,9 @@
+eu\extremexp\dms\utils\ReadJson.class
+eu\extremexp\dms\Main.class
+eu\extremexp\dms\XDSLGraphicalJSONModelIO.class
+eu\extremexp\dms\XDSLModelIO.class
+eu\extremexp\dms\AbstractXDSLModelIO.class
+eu\extremexp\dms\DirectoryGraphicalJSONModelIO.class
+eu\extremexp\dms\MainDebug.class
+eu\extremexp\dms\GraphicalJSONxDLSModelIO.class
+eu\extremexp\dms\ECoreModelIO.class

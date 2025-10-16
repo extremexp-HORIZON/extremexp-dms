@@ -1,0 +1,27 @@
+# VCS
+.git
+.gitignore
+
+# Maven
+**/target/
+**/.mvn/
+!**/.mvn/wrapper/**
+mvnw
+mvnw.cmd
+
+# IDE/editor
+.idea/
+.vscode/
+*.iml
+
+# OS/Junk
+**/*.log
+**/.DS_Store
+**/Thumbs.db
+
+# Build caches
+.cache/
+**/node_modules/
+
+# Large workspace artifacts not needed in container
+extremexp-dsl-framework/workspace/

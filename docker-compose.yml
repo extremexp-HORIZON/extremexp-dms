@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  dms-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: extremexp-dms:latest
+    ports:
+      - "8080:8080"
+    environment:
+      - SERVER_PORT=8080
+      - JAVA_OPTS=-Xms256m -Xmx1g
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8080/actuator/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s

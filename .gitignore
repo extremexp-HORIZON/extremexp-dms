@@ -1,0 +1,26 @@
+# Ignore JAR files
+*.jar
+
+# IDE files
+# IntelliJ IDEA
+.idea/
+*.iml
+out/
+
+# Eclipse
+.project
+.classpath
+.settings/
+bin/
+
+# VS Code
+.vscode/
+
+# NetBeans
+nbproject/private/
+build/
+dist/
+
+# Mac & Windows system files
+.DS_Store
+Thumbs.db

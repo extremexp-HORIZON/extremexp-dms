@@ -3,9 +3,12 @@ package eu.extremexp.dms.gemodel;
 import eu.extremexp.dsl.xDSL.Task;
 import eu.extremexp.dsl.xDSL.XDSLFactory;
 
+import java.util.HashSet;
+
 
 public class GTask extends GSingleObject{
     Task eObject;
+
 
     public GTask(String name, XDSLFactory factory){
         eObject = factory.createTask();
@@ -13,7 +16,7 @@ public class GTask extends GSingleObject{
         eObject.setAbstract(true);
     }
 
-    @Override
+
     public Task getEObject(){
         return this.eObject;
     }

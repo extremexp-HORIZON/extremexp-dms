@@ -1,9 +1,6 @@
 package eu.extremexp.dms.gemodel;
 
-import eu.extremexp.dsl.xDSL.CompositeWorkflow;
-import eu.extremexp.dsl.xDSL.EventValue;
-import eu.extremexp.dsl.xDSL.Workflow;
-import eu.extremexp.dsl.xDSL.XDSLFactory;
+import eu.extremexp.dsl.xDSL.*;
 
 
 import java.util.ArrayList;
@@ -14,6 +11,7 @@ public class GCompositeWorkflow extends GSingleObject{
     private final List<GTask> gTasks ;
     private final List<GInputData> gInputs;
     private final List<GOutputData> gOutputs;
+    private final List<GDataConfiguration> gDataConfigurations;
 
     private List<GAssembledWorkflow> gAssembledWorkflows;
     private List<GRegularLink> gRegularLinks;
@@ -30,6 +28,7 @@ public class GCompositeWorkflow extends GSingleObject{
         this.gTasks = new ArrayList<>();
         this.gInputs = new ArrayList<>();
         this.gOutputs = new ArrayList<>();
+        this.gDataConfigurations = new ArrayList<>();
     }
 
     @Override
@@ -43,8 +42,12 @@ public class GCompositeWorkflow extends GSingleObject{
         this.eObject.getTasks().add(task.getEObject());
     }
 
-    public void addLink(GRegularLink regularLink) {
+    public void addRegularLink(GRegularLink regularLink) {
         this.eObject.getLinks().add(regularLink.getEObject());
+    }
+
+    public void addChainLink(GChainLink chainLink) {
+        this.eObject.getLinks().add(chainLink.getEObject());
     }
 
     public void addInputData(GInputData gInputData) {
@@ -57,4 +60,17 @@ public class GCompositeWorkflow extends GSingleObject{
         this.eObject.getOutputs().add(gOutputData.getEObject());
     }
 
+    public void addDataConfiguration(GDataConfiguration dataConf) {
+        this.gDataConfigurations.add(dataConf);
+        this.eObject.getDataConfigurations().add(dataConf.getEObject());
+    }
+
+
+    public void addDataLink(GDataLink gDataLink) {
+        var gDataLinkObject = gDataLink.getDataLink();
+        if (gDataLinkObject != null){
+
+            this.eObject.getDataLinks().add(gDataLinkObject);
+        }
+    }
 }

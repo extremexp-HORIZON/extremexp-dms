@@ -118,7 +118,7 @@
     },
     {
       "data": {
-        "currentVariant": "variant-2-6c3j3VD6j90gDN7tPGZyF",
+        "currentVariant": "variant-1-mR3dTV51mS5xXJWRQOV4F",
         "variants": [
           {
             "description": "no description",
@@ -127,10 +127,10 @@
               "nodes": []
             },
             "id_task": "variant-1-mR3dTV51mS5xXJWRQOV4F",
-            "implementationRef": "",
+            "implementationRef": "TrainModel",
             "isAbstract": true,
             "is_composite": false,
-            "name": "task",
+            "name": "TrainModel",
             "parameters": [],
             "variant": 1
           },
@@ -195,13 +195,13 @@
         ]
       },
       "dragging": false,
-      "height": 163,
+      "height": 44,
       "id": "task-Epv8EyymlNrOI4lT3BZJH",
       "position": {
         "x": -76,
         "y": 7.25
       },
-      "selected": false,
+      "selected": true,
       "type": "task",
       "width": 102
     },
@@ -333,12 +333,23 @@
               ]
             },
             "id_task": "variant-2-pTAZqFSY--_93ZE3ZqRWg",
-            "implementationRef": "",
+            "implementationRef": "AddPadding",
             "isAbstract": true,
             "is_composite": true,
-            "name": "load csv",
+            "name": "AddPadding",
             "parameters": [],
             "variant": 2
+          },
+          {
+            "description": "no description",
+            "graphical_model": null,
+            "id_task": "variant-3-J2r8B6RUG-xOAtkXvnS2Z",
+            "implementationRef": "",
+            "isAbstract": true,
+            "is_composite": false,
+            "name": "task",
+            "parameters": [],
+            "variant": 3
           }
         ]
       },

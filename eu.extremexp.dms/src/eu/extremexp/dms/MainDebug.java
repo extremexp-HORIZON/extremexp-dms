@@ -31,10 +31,6 @@ public class MainDebug {
         List<JNode> jNodes = parser.getNodes();
         List<JEdge> jEdges = parser.getEdges();
 
-        // Placeholder: deal with the map output from ParseJSON
-        System.out.println("Parsed nodes: " + jNodes.size());
-        System.out.println("Parsed edges: " + jEdges.size());
-
         var graphicalJSONxDSLModelIO = new GraphicalJSONxDSLModelIO(jNodes, jEdges, "med");
         XDSLModelIO xDSLModelIO = new XDSLModelIO(graphicalJSONxDSLModelIO);
         System.out.println(xDSLModelIO.formattedSerialize());

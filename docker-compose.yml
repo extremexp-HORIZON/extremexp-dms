@@ -3,7 +3,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: ./Dockerfile
     ports:
       - "8866:8866"
     environment:

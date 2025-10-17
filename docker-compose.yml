@@ -1,7 +1,7 @@
 services:
   dms-api:
     build:
-      context: /home/abdullah/repos/horizon/extremexp-dms
+      context: .
       dockerfile: Dockerfile
     ports:
       - "8866:8866"

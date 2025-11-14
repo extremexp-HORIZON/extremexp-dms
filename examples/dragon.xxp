@@ -1,0 +1,112 @@
+ workflow dragon{
+	input data abc;
+	output data xyz;
+	task TrainModel;
+	task AddPadding;
+	configure data abc{
+		path "path to somewhere, 123";
+	}
+
+	configure data xyz{
+	}
+
+	START -> TrainModel -> AddPadding -> END;
+	abc --> AddPadding . abc;
+	AddPadding . xyz --> xyz;
+}
+
+workflow dragon_assembled from dragon{
+	task TrainModel{
+		description "no description";
+		implementation "TrainModel";
+	}
+
+	task AddPadding{
+		description "no description";
+		implementation "";
+	}
+
+}
+
+workflow dragon_assembled_1 from dragon{
+	task TrainModel{
+		description "no description";
+		implementation "TrainModel";
+	}
+
+	task AddPadding{
+		description "no description";
+		implementation "AddPadding";
+	}
+
+}
+
+workflow dragon_assembled_2 from dragon{
+	task TrainModel{
+		description "no description";
+		implementation "TrainModel";
+	}
+
+	task AddPadding{
+		description "no description";
+		implementation "";
+	}
+
+}
+
+workflow dragon_assembled_3 from dragon{
+	task TrainModel{
+		param abc;
+		param def = 123;
+		param xyz = "STR";
+		param eee33;
+		param arr32;
+		param bb22;
+		description "no description";
+		implementation "";
+	}
+
+	task AddPadding{
+		description "no description";
+		implementation "";
+	}
+
+}
+
+workflow dragon_assembled_4 from dragon{
+	task TrainModel{
+		param abc;
+		param def = 123;
+		param xyz = "STR";
+		param eee33;
+		param arr32;
+		param bb22;
+		description "no description";
+		implementation "";
+	}
+
+	task AddPadding{
+		description "no description";
+		implementation "AddPadding";
+	}
+
+}
+
+workflow dragon_assembled_5 from dragon{
+	task TrainModel{
+		param abc;
+		param def = 123;
+		param xyz = "STR";
+		param eee33;
+		param arr32;
+		param bb22;
+		description "no description";
+		implementation "";
+	}
+
+	task AddPadding{
+		description "no description";
+		implementation "";
+	}
+
+}

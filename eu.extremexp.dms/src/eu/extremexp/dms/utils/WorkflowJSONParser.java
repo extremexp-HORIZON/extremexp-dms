@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class ParseJSON {
+public class WorkflowJSONParser {
     /**
      * Immutable pair of source/target nodes for an edge.
      */
@@ -26,7 +26,7 @@ public class ParseJSON {
      * @param json JSON content as a String
      * @throws IllegalArgumentException if parsing fails or content is empty
      */
-    public ParseJSON(String json) {
+    public WorkflowJSONParser(String json) {
         Objects.requireNonNull(json, "json");
         this.JNodes = new ArrayList<>();
         this.JEdges = new ArrayList<>();

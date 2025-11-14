@@ -4,83 +4,19 @@ import com.fasterxml.jackson.databind.JsonNode;
 import eu.extremexp.dms.gemodel.*;
 import eu.extremexp.dms.utils.JEdge;
 import eu.extremexp.dms.utils.JNode;
-import eu.extremexp.dms.utils.ParseJSON;
 import eu.extremexp.dsl.xDSL.*;
-import eu.extremexp.dsl.xDSL.impl.DataLinkImpl;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 
 import java.util.*;
 
-public class GraphicalJSONxDSLModelIO extends AbstractXDSLModelIO{
+public class GraphicalJSONWorkflowModel extends AbstractXDSLModelIO implements Iterable<Workflow>{
+    Map<String, GObject> gIDs;
 
-        Map<String, GObject> gIDs;
-//    public Root createDummyRoot(){
-//        var resource = this.resourceSet.createResource(URI.createURI("temp.xxp"));
-//
-//        Root r = XDSLFactory.eINSTANCE.createRoot();
-//        resource.getContents().add(r);
-//
-//        System.out.println(r.eResource());
-//        CompositeWorkflow cm = XDSLFactory.eINSTANCE.createCompositeWorkflow();
-//        resource.getContents().add(cm);
-//
-//        cm.setName("ABC");
-//
-//    Task t = createTask(resource, "task_1");
-//
-//
-//    InputData d = createInputData(resource, "d1");
+    List<Workflow> eObjects;
 
-        DataConfiguration dc = XDSLFactory.eINSTANCE.createDataConfiguration();
-//
-//        ParamValue pv = XDSLFactory.eINSTANCE.createParamValue();
-//
-//        ParamValueEnum pve = XDSLFactory.eINSTANCE.createParamValueEnum();
-//        ParamValueList pvl = XDSLFactory.eINSTANCE.createParamValueList();
-//        ParamValueRange pvr = XDSLFactory.eINSTANCE.createParamValueRange();
-//
-//        pvr.setStep(0);
-//        pvr.setEnd(0);
-//        pvr.setStart(0);
-//
-//        pv.setPrimitiveValue("");
-//        pvl.getValues().add("");
-//        pve.getValues().add("");
-//
-//        pv.setRangeValue(pvr);
-//        pv.setListValue(pvl);
-//        pv.setEnumValue(pve);
-//
-//
-//        dc.setData(d);
-//        dc.setType("some-type");
-//        dc.setPath("some path maybe data[\"fields\"]");
-//        dc.setDefaultValue(pv);
-
-    // Task already configured in createTask(...)
-
-//        cm.getInputs().add(d);
-//        cm.getTasks().add(t);
-//
-//
-//        AssembledWorkflow asm = XDSLFactory.eINSTANCE.createAssembledWorkflow();
-//        resource.getContents().add(asm);
-//        asm.setName("asm1");
-//        asm.setParent(cm);
-//
-//        r.getWorkflows().add(cm);
-//        r.getWorkflows().add(asm);
-//
-//        return r;
-//    }
-
-    public GraphicalJSONxDSLModelIO(List<JNode> nodes, List<JEdge> edges, String workflowName){
+    public GraphicalJSONWorkflowModel(List<JNode> nodes, List<JEdge> edges, String workflowName){
         this.gIDs = new HashMap<>();
-        var resource = this.resourceSet.createResource(URI.createURI("temp.xxp"));
-
         GCompositeWorkflow gCompositeWorkflow = new GCompositeWorkflow(workflowName, XDSLFactory.eINSTANCE);
 
         JNode startNode = null;
@@ -113,29 +49,25 @@ public class GraphicalJSONxDSLModelIO extends AbstractXDSLModelIO{
             }
         });
 
-        List<Map<String, JsonNode>>  combincations = populateAssembledWorkflows(nodes);
-        List<GAssembledWorkflow>  gAsWs = this.createAssembledWorks(gCompositeWorkflow, combincations, XDSLFactory.eINSTANCE);
+        List<Map<String, JsonNode>>  combinations = populateAssembledWorkflows(nodes);
+        this.eObjects =
+                this.createAssembledWorks(gCompositeWorkflow, combinations, XDSLFactory.eINSTANCE);
 
-
-        this.root = XDSLFactory.eINSTANCE.createRoot();
-        this.root.getWorkflows().add(gCompositeWorkflow.getEObject());
-        gAsWs.forEach(gAssembledWorkflow -> {
-            this.root.getWorkflows().add(gAssembledWorkflow.getEObject());
-        });
-        resource.getContents().add(this.root);
+        this.eObjects.addFirst(gCompositeWorkflow.getEObject());
 
     }
 
-    private List<GAssembledWorkflow> createAssembledWorks(GCompositeWorkflow gCompositeWorkflow,
+
+    private List<Workflow> createAssembledWorks(GCompositeWorkflow gCompositeWorkflow,
                                List<Map<String, JsonNode>> combinations, XDSLFactory factory) {
-        ArrayList<GAssembledWorkflow> gAws = new ArrayList<>();
+        ArrayList<Workflow> gAws = new ArrayList<>();
         combinations.forEach(combination -> {
             GAssembledWorkflow gAssembledWorkflow = new GAssembledWorkflow(gCompositeWorkflow, factory);
             combination.forEach((key, variant) -> {
                 GTask task = (GTask) gIDs.get(key);
                 gAssembledWorkflow.addTaskConfiguration(task, variant, factory);
             });
-            gAws.add(gAssembledWorkflow);
+            gAws.add(gAssembledWorkflow.getEObject());
 
         });
         return  gAws;
@@ -315,4 +247,9 @@ public class GraphicalJSONxDSLModelIO extends AbstractXDSLModelIO{
     }
 
 
+
+    @Override
+    public Iterator<Workflow> iterator() {
+        return eObjects.iterator();
+    }
 }

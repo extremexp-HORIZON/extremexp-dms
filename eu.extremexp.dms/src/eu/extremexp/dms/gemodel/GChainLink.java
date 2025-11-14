@@ -20,7 +20,7 @@ public class GChainLink extends GSingleObject{
         if (started && !ended){
             Node node = factory.createNode();
             node.setRef(task.getEObject());
-            this.eObject.getOuput().add(node);
+            this.eObject.getOutput().add(node);
         }
         else {
             System.out.println("ERROR , first start, and before end add tasks");
@@ -28,7 +28,7 @@ public class GChainLink extends GSingleObject{
     }
 
     public void end(GEvent endNode){
-        this.eObject.getOuput().add(endNode.getEObject());
+        this.eObject.getOutput().add(endNode.getEObject());
         ended = true;
     }
 

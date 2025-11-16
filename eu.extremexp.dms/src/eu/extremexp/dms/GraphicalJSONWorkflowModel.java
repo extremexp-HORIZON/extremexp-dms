@@ -50,8 +50,7 @@ public class GraphicalJSONWorkflowModel extends AbstractXDSLModelIO implements I
         });
 
         List<Map<String, JsonNode>>  combinations = populateAssembledWorkflows(nodes);
-        this.eObjects =
-                this.createAssembledWorks(gCompositeWorkflow, combinations, XDSLFactory.eINSTANCE);
+        this.eObjects = this.createAssembledWorks(gCompositeWorkflow, combinations, XDSLFactory.eINSTANCE);
 
         this.eObjects.addFirst(gCompositeWorkflow.getEObject());
 
@@ -66,6 +65,7 @@ public class GraphicalJSONWorkflowModel extends AbstractXDSLModelIO implements I
             combination.forEach((key, variant) -> {
                 GTask task = (GTask) gIDs.get(key);
                 gAssembledWorkflow.addTaskConfiguration(task, variant, factory);
+                gIDs.put(variant.get("id_task").asText(), gAssembledWorkflow);
             });
             gAws.add(gAssembledWorkflow.getEObject());
 
@@ -246,7 +246,19 @@ public class GraphicalJSONWorkflowModel extends AbstractXDSLModelIO implements I
         gIDs.put(node.id(), end);
     }
 
+    public AssembledWorkflow getAssembledWorkflowByVariant(String variant){
+        if (this.gIDs.containsKey(variant)){
+            GObject gAssembledWorkflow = this.gIDs.get(variant);
+            if (gAssembledWorkflow instanceof GAssembledWorkflow){
+                return ((GAssembledWorkflow) gAssembledWorkflow).getEObject();
+            }
+        }
+        return null;
+    }
 
+    public GObject getGObject(String key){
+        return this.gIDs.get(key);
+    }
 
     @Override
     public Iterator<Workflow> iterator() {

@@ -1,14 +1,9 @@
 package eu.extremexp.dms;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import eu.extremexp.dms.gemodel.*;
-import eu.extremexp.dms.utils.JEdge;
-import eu.extremexp.dms.utils.JNode;
 import eu.extremexp.dms.utils.JStep;
 import eu.extremexp.dsl.xDSL.*;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
+
 
 import java.util.*;
 
@@ -17,11 +12,21 @@ public class GraphicalJSONExperimentModel extends AbstractXDSLModelIO{
     Map<String, GObject> gIDs;
     GExperiment gExperiment;
 
-    public GraphicalJSONExperimentModel(List<JStep> steps, String experimentName){
+    public GraphicalJSONExperimentModel(
+            List<JStep> steps,
+            List<GraphicalJSONWorkflowModel> graphicalJSONWorkflowModels,
+            String experimentName){
+
         this.gIDs = new HashMap<>();
-        var resource = this.resourceSet.createResource(URI.createURI(experimentName + "_temp.xxp"));
 
         this.gExperiment = new GExperiment( experimentName, XDSLFactory.eINSTANCE);
+
+        for (JStep jStep : steps){
+            var spaces = this.createSpaces(jStep, graphicalJSONWorkflowModels, XDSLFactory.eINSTANCE);
+            for (var space: spaces){
+                this.gExperiment.addSpace(space);
+            }
+        }
 //
 //        JNode startNode = null;
 //        JNode endNode = null;
@@ -62,6 +67,35 @@ public class GraphicalJSONExperimentModel extends AbstractXDSLModelIO{
 //            this.root.getWorkflows().add(gAssembledWorkflow.getEObject());
 //        });
 
+    }
+
+
+    private List<GSpace> createSpaces(JStep jStep, List<GraphicalJSONWorkflowModel> graphicalJSONWorkflowModels, XDSLFactory factory){
+        List<GSpace> gSpaces = new ArrayList<>();
+        for (var jsonSpace : jStep.data().get("spaces")){
+            for (var miniStep : jsonSpace.get("steps")){
+                for (var miniTask : miniStep.get("tasks")) {
+                    GObject connectedWorkflow = null;
+                    for (var workflowModel : graphicalJSONWorkflowModels) {
+                        try {
+                            connectedWorkflow = workflowModel.getGObject(miniTask.get("id").asText());
+                            if (connectedWorkflow instanceof GAssembledWorkflow) {
+                                GSpace gSpace = new GSpace(
+                                        jsonSpace.get("name").asText(),
+                                        jStep.data().get("executionOrder").asInt(),
+                                        (GAssembledWorkflow) connectedWorkflow,
+                                        factory);
+
+                                gSpaces.add(gSpace);
+                            }
+                        } catch (NoSuchElementException ignored) {
+                        }
+                    }
+
+                }
+            }
+        }
+        return gSpaces;
     }
 //
 //    private List<GAssembledWorkflow> createAssembledWorks(GCompositeWorkflow gCompositeWorkflow,

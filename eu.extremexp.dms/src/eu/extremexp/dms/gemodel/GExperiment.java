@@ -3,10 +3,12 @@ package eu.extremexp.dms.gemodel;
 import eu.extremexp.dsl.xDSL.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class GExperiment extends GSingleObject {
     private final Experiment eObject;
+    private HashMap<Integer, List<Space>> spaceOrder;
 //    private final GControl gControl ;
 //    private final List<GInputData> gInputs;
 //    private final List<GOutputData> gOutputs;
@@ -23,6 +25,7 @@ public class GExperiment extends GSingleObject {
     public GExperiment(String name, XDSLFactory factory){
         this.eObject = factory.createExperiment();
         this.eObject.setName(this.ID(name));
+        spaceOrder = new HashMap<>();
 
 
 //        this.eObject = eInstance.createCompositeWorkflow();
@@ -42,7 +45,16 @@ public class GExperiment extends GSingleObject {
 
     public void addSpace(GSpace space){
         this.eObject.getSpaces().add(space.getEObject());
+        if (!spaceOrder.containsKey(space.getExecutionOrder())){
+            spaceOrder.put(space.getExecutionOrder(), new ArrayList<>());
+        }
+        spaceOrder.get(space.getExecutionOrder()).add(space.getEObject());
     }
+
+    public void createControl(XDSLFactory factory){
+
+    }
+
 //
 //    public void addTask(GTask task) {
 //        this.gTasks.add(task);

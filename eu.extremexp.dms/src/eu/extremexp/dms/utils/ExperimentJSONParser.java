@@ -52,17 +52,21 @@ public class ExperimentJSONParser {
             }
 
             GraphicalJSONModel graphicalJSONModel = new GraphicalJSONModel();
-
+            List<GraphicalJSONWorkflowModel> graphicalJSONWorkflowModels = new ArrayList<>();
             JsonNode workflows = root.path("workflows");
             for (var wjson : workflows){
                 System.out.println(wjson.get("graphical_model"));
                 WorkflowJSONParser wjs = new WorkflowJSONParser(wjson.get("graphical_model").toString());
                 var graphicalJSONxDSLModelIO = new GraphicalJSONWorkflowModel(wjs.getNodes(), wjs.getEdges(), wjson.get("name").asText());
+                graphicalJSONWorkflowModels.add(graphicalJSONxDSLModelIO);
                 workflowJSONParsers.add(wjs);
                 graphicalJSONModel.addWorkflows(graphicalJSONxDSLModelIO);
             }
 
-            GraphicalJSONExperimentModel graphicalJSONExperimentModel = new GraphicalJSONExperimentModel(jSteps, experiment.get("name").asText());
+            GraphicalJSONExperimentModel graphicalJSONExperimentModel = new GraphicalJSONExperimentModel(
+                    jSteps,
+                    graphicalJSONWorkflowModels ,
+                    experiment.get("name").asText());
 
             graphicalJSONModel.addExperiment(graphicalJSONExperimentModel);
 

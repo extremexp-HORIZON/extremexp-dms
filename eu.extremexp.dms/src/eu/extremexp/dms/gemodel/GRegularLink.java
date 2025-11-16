@@ -17,7 +17,7 @@ public class GRegularLink {
 
         this.eObject = factory.createRegularLink();
         this.eObject.setInput(sourceNode);
-        this.eObject.getOuput().add(targetNode);
+        this.eObject.getOutput().add(targetNode);
 
 
     }

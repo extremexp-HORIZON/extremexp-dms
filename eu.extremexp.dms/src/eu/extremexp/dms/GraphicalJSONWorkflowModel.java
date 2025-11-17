@@ -12,11 +12,12 @@ import java.util.*;
 
 public class GraphicalJSONWorkflowModel extends AbstractXDSLModelIO implements Iterable<Workflow>{
     Map<String, GObject> gIDs;
-
+    Map<GAssembledWorkflow, Set<String>> variants;
     List<Workflow> eObjects;
 
     public GraphicalJSONWorkflowModel(List<JNode> nodes, List<JEdge> edges, String workflowName){
         this.gIDs = new HashMap<>();
+        this.variants = new HashMap<>();
         GCompositeWorkflow gCompositeWorkflow = new GCompositeWorkflow(workflowName, XDSLFactory.eINSTANCE);
 
         JNode startNode = null;
@@ -65,7 +66,11 @@ public class GraphicalJSONWorkflowModel extends AbstractXDSLModelIO implements I
             combination.forEach((key, variant) -> {
                 GTask task = (GTask) gIDs.get(key);
                 gAssembledWorkflow.addTaskConfiguration(task, variant, factory);
-                gIDs.put(variant.get("id_task").asText(), gAssembledWorkflow);
+                if (!this.variants.containsKey(gAssembledWorkflow)){
+                    this.variants.put(gAssembledWorkflow, new HashSet<>());
+                }
+                this.variants.get(gAssembledWorkflow).add(variant.get("id_task").asText());
+
             });
             gAws.add(gAssembledWorkflow.getEObject());
 
@@ -246,18 +251,39 @@ public class GraphicalJSONWorkflowModel extends AbstractXDSLModelIO implements I
         gIDs.put(node.id(), end);
     }
 
-    public AssembledWorkflow getAssembledWorkflowByVariant(String variant){
-        if (this.gIDs.containsKey(variant)){
-            GObject gAssembledWorkflow = this.gIDs.get(variant);
-            if (gAssembledWorkflow instanceof GAssembledWorkflow){
-                return ((GAssembledWorkflow) gAssembledWorkflow).getEObject();
-            }
-        }
-        return null;
-    }
-
     public GObject getGObject(String key){
         return this.gIDs.get(key);
+    }
+
+    public GAssembledWorkflow getAssembledWorkflow(List<String> variantIDs){
+        List<GAssembledWorkflow> foundWorkflows = new ArrayList<>();
+
+        this.variants.forEach((GAssembledWorkflow k,  Set<String> v) -> {
+            if (foundWorkflows.isEmpty()) {
+                boolean all = false;
+                for (String variantKey : variantIDs) {
+                    if (!v.contains(variantKey)) {
+                        all = false;
+                        break;
+                    }
+                    else{
+                        all = true;
+                    }
+                }
+                if (all){
+                    foundWorkflows.add(k);
+                    }
+            }
+
+        });
+
+        if (foundWorkflows.size() == 1){
+            return foundWorkflows.getFirst();
+        }
+        else{
+            return null;
+        }
+
     }
 
     @Override

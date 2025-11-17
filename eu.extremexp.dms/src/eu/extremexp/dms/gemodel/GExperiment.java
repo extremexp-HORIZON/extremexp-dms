@@ -5,6 +5,7 @@ import eu.extremexp.dsl.xDSL.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GExperiment extends GSingleObject {
     private final Experiment eObject;
@@ -51,7 +52,20 @@ public class GExperiment extends GSingleObject {
         spaceOrder.get(space.getExecutionOrder()).add(space.getEObject());
     }
 
-    public void createControl(XDSLFactory factory){
+    public void setControl(XDSLFactory factory){
+        GControl gControl = new GControl(factory);
+
+        GRegularExpLink gRegularExpLink = new GRegularExpLink(true, true, factory);
+        for (int i = 0; i< spaceOrder.size() ; i++){
+            int executionOrder = i + 1 ; // the order starts from 1
+            if (spaceOrder.containsKey(executionOrder)){
+                // TODO fix the below for parallel spaces
+                gRegularExpLink.addSpace(factory, spaceOrder.get(executionOrder).getFirst());
+            }
+        }
+
+        gControl.addRegularExpLink(gRegularExpLink.getEObject());
+        this.eObject.setControl(gControl.getEObject());
 
     }
 

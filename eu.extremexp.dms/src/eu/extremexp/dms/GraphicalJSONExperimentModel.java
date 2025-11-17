@@ -27,6 +27,7 @@ public class GraphicalJSONExperimentModel extends AbstractXDSLModelIO{
                 this.gExperiment.addSpace(space);
             }
         }
+        this.gExperiment.setControl(XDSLFactory.eINSTANCE);
 //
 //        JNode startNode = null;
 //        JNode endNode = null;
@@ -72,27 +73,31 @@ public class GraphicalJSONExperimentModel extends AbstractXDSLModelIO{
 
     private List<GSpace> createSpaces(JStep jStep, List<GraphicalJSONWorkflowModel> graphicalJSONWorkflowModels, XDSLFactory factory){
         List<GSpace> gSpaces = new ArrayList<>();
+
         for (var jsonSpace : jStep.data().get("spaces")){
-            for (var miniStep : jsonSpace.get("steps")){
+            List<String> variants = new ArrayList<>();
+            for (var miniStep : jsonSpace.get("steps")) {
                 for (var miniTask : miniStep.get("tasks")) {
-                    GObject connectedWorkflow = null;
-                    for (var workflowModel : graphicalJSONWorkflowModels) {
-                        try {
-                            connectedWorkflow = workflowModel.getGObject(miniTask.get("id").asText());
-                            if (connectedWorkflow instanceof GAssembledWorkflow) {
-                                GSpace gSpace = new GSpace(
-                                        jsonSpace.get("name").asText(),
-                                        jStep.data().get("executionOrder").asInt(),
-                                        (GAssembledWorkflow) connectedWorkflow,
-                                        factory);
-
-                                gSpaces.add(gSpace);
-                            }
-                        } catch (NoSuchElementException ignored) {
-                        }
+                    if (miniTask.get("selected").asBoolean()) {
+                        variants.add(miniTask.get("id").asText());
                     }
-
                 }
+            }
+            GAssembledWorkflow gAssembledWorkflow = null;
+            for (var workflowModel : graphicalJSONWorkflowModels){
+                gAssembledWorkflow = workflowModel.getAssembledWorkflow(variants);
+                if (gAssembledWorkflow != null){
+                    break;
+                }
+            }
+            if (gAssembledWorkflow != null) {
+                GSpace gSpace = new GSpace(
+                        jStep.data().get("name").asText(),
+                        jStep.data().get("executionOrder").asInt(),
+                        gAssembledWorkflow,
+                        factory);
+
+                gSpaces.add(gSpace);
             }
         }
         return gSpaces;

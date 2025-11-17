@@ -33,7 +33,7 @@ public class GAssembledWorkflow extends GSingleObject{
 
         variant.get("parameters").forEach(paramData -> {
             Param param = factory.createParam();
-            param.setName(paramData.get("name").asText());
+            param.setName(this.ID(paramData.get("name").asText()));
             if ( paramData.get("values").isArray()){
                 paramData.get("values").forEach(value -> {
                     switch (paramData.get("type").asText()){

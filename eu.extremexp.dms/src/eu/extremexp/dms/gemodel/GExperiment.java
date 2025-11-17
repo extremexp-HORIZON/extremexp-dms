@@ -60,7 +60,12 @@ public class GExperiment extends GSingleObject {
             int executionOrder = i + 1 ; // the order starts from 1
             if (spaceOrder.containsKey(executionOrder)){
                 // TODO fix the below for parallel spaces
-                gRegularExpLink.addSpace(factory, spaceOrder.get(executionOrder).getFirst());
+                List<Space> spaces = spaceOrder.get(executionOrder);
+                if (spaces.size() == 1){
+                    gRegularExpLink.addSingleNode(spaces.getFirst(), factory);
+                } else if (spaces.size()> 1) {
+                    gRegularExpLink.addParallelNodes(spaces, factory);
+                }
             }
         }
 

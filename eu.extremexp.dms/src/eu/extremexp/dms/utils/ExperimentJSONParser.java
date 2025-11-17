@@ -55,7 +55,6 @@ public class ExperimentJSONParser {
             List<GraphicalJSONWorkflowModel> graphicalJSONWorkflowModels = new ArrayList<>();
             JsonNode workflows = root.path("workflows");
             for (var wjson : workflows){
-                System.out.println(wjson.get("graphical_model"));
                 WorkflowJSONParser wjs = new WorkflowJSONParser(wjson.get("graphical_model").toString());
                 var graphicalJSONxDSLModelIO = new GraphicalJSONWorkflowModel(wjs.getNodes(), wjs.getEdges(), wjson.get("name").asText());
                 graphicalJSONWorkflowModels.add(graphicalJSONxDSLModelIO);

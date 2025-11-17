@@ -215,7 +215,13 @@ public class GraphicalJSONWorkflowModel extends AbstractXDSLModelIO implements I
         edges.forEach(edge -> {
             if (edge.sourceId().equals(node.id())){
                 // create inputData
-                GInputData gInputData = new GInputData(node.data().get("name").asText(), factory);
+                GInputData gInputData;
+                if (node.data().has("name")) {
+                    gInputData = new GInputData(node.data().get("name").asText(), factory);
+                }
+                else{
+                    gInputData = new GInputData("inputData", factory);
+                }
                 gCompositeWorkflow.addInputData(gInputData);
                 this.gIDs.put(node.id(), gInputData);
 
@@ -227,7 +233,13 @@ public class GraphicalJSONWorkflowModel extends AbstractXDSLModelIO implements I
             }
             if (edge.targetId().equals(node.id())){
                 // create outputData
-                GOutputData gOutputData = new GOutputData(node.data().get("name").asText(), factory);
+                GOutputData gOutputData;
+                if (node.data().has("name")) {
+                    gOutputData = new GOutputData(node.data().get("name").asText(), factory);
+                }
+                else{
+                    gOutputData = new GOutputData("outputData", factory);
+                }
                 gCompositeWorkflow.addOutputData(gOutputData);
                 this.gIDs.put(node.id(), gOutputData);
 

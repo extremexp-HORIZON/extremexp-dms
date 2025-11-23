@@ -32,19 +32,19 @@ public class GHyperParameter extends GSingleObject{
                 return;
             case "range":
                 ParamValueRange paramValueRange = factory.createParamValueRange();
-                ArrayList<Integer> parsedValues = new ArrayList<>();
+                ArrayList<String> parsedValues = new ArrayList<>();
                 for (var value : values){
-                    parsedValues.add(value.asInt());
+                    parsedValues.add(value.asText());
                 }
                 if (parsedValues.size() == 1){
-                    paramValueRange.setStart(0);
+                    paramValueRange.setStart("0");
                     paramValueRange.setEnd(parsedValues.getFirst());
-                    paramValueRange.setStep(1);
+                    paramValueRange.setStep("1");
                 }
                 if (parsedValues.size() == 2){
                     paramValueRange.setStart(parsedValues.getFirst());
                     paramValueRange.setEnd(parsedValues.getLast());
-                    paramValueRange.setStep(1);
+                    paramValueRange.setStep("1");
                 }
                 if (parsedValues.size() > 2){
                     paramValueRange.setStart(parsedValues.getFirst());

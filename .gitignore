@@ -24,3 +24,6 @@ dist/
 # Mac & Windows system files
 .DS_Store
 Thumbs.db
+
+# java built
+*.class

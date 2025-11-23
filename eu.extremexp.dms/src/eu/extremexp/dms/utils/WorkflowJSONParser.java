@@ -2,6 +2,7 @@ package eu.extremexp.dms.utils;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import eu.extremexp.dms.GraphicalJSONModel;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,7 +15,6 @@ public class WorkflowJSONParser {
     /**
      * Immutable pair of source/target nodes for an edge.
      */
-
     private final List<JNode> JNodes;
     private final List<JEdge> JEdges;
 

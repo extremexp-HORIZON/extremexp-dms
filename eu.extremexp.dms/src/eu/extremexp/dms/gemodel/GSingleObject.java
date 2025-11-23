@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class GSingleObject implements GObject{
     EObject eObject;
-    static HashMap<String, Integer> uniqueNames = new HashMap<>();
+    static HashMap<GObject, HashMap<String,Integer>> uniqueNames = new HashMap<>();
 
     @Override
     public EObject getEObject() {
@@ -19,17 +19,27 @@ public class GSingleObject implements GObject{
         resource.getContents().add(this.getEObject());
     }
 
-    protected String ID(String name){
+    protected String ID(GObject container, String name){
         name = name.replace("-", "_");
         name = name.replace(" ", "_");
-        if (uniqueNames.containsKey(name)) {
-            int counter = uniqueNames.get(name)+1;
-            uniqueNames.put(name, counter);
-            name = name + ("_" + counter);
+        if (uniqueNames.containsKey(container)){
+            HashMap<String, Integer> subNames = uniqueNames.get(container);
+            if (subNames.containsKey(name)) {
+                int counter = subNames.get(name)+1;
+                subNames.put(name, counter);
+                name = name + ("_" + counter);
+
+            }
+            else{
+                subNames.put(name, 0);
+            }
         }
         else{
-            uniqueNames.put(name, 0);
+            uniqueNames.put(container, new HashMap<>());
+            HashMap<String, Integer> subNames = uniqueNames.get(container);
+            subNames.put(name, 0);
         }
+
         return name;
     }
 

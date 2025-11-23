@@ -7,9 +7,9 @@ import org.eclipse.emf.ecore.EObject;
 public class GInputData extends GSingleObject{
     InputData eObject;
 
-    public GInputData(String id, XDSLFactory factory) {
+    public GInputData(GCompositeWorkflow gCompositeWorkflow, String id, XDSLFactory factory) {
         eObject = factory.createInputData();
-        eObject.setName(this.ID(id));
+        eObject.setName(this.ID(gCompositeWorkflow, id));
     }
 
     @Override

@@ -1,16 +1,14 @@
-package eu.extremexp.dms;
+package eu.extremexp.dms.jmodel;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import eu.extremexp.dms.gemodel.*;
 import eu.extremexp.dms.utils.JEdge;
 import eu.extremexp.dms.utils.JNode;
 import eu.extremexp.dsl.xDSL.*;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
 
 import java.util.*;
 
-public class GraphicalJSONWorkflowModel extends AbstractXDSLModelIO implements Iterable<Workflow>{
+public class GraphicalJSONWorkflowModel  implements Iterable<Workflow>{
     Map<String, GObject> gIDs;
     Map<GAssembledWorkflow, Set<String>> variants;
     List<Workflow> eObjects;
@@ -181,18 +179,18 @@ public class GraphicalJSONWorkflowModel extends AbstractXDSLModelIO implements I
         gCompositeWorkflow.addChainLink(chainLink);
 
     }
-
-
-
-    @Override
-    public EObject createModelObject() {
-        return super.createModelObject();
-    }
-
-    @Override
-    public Resource getResource(EObject eObject) {
-        return super.getResource(eObject);
-    }
+//
+//
+//
+//    @Override
+//    public EObject createModelObject() {
+//        return super.createModelObject();
+//    }
+//
+//    @Override
+//    public Resource getResource(EObject eObject) {
+//        return super.getResource(eObject);
+//    }
 
     private void createTask(GCompositeWorkflow  gCompositeWorkflow, XDSLFactory factory, JNode node){
 
@@ -200,7 +198,7 @@ public class GraphicalJSONWorkflowModel extends AbstractXDSLModelIO implements I
         node.data().get("variants").forEach(variant -> {
             if (variant.get("id_task").asText().equals(currentVariant)){
                 String taskName = variant.get("name").asText();
-                GTask task = new GTask(taskName, factory);
+                GTask task = new GTask(gCompositeWorkflow, taskName, factory);
                 gCompositeWorkflow.addTask(task);
                 this.gIDs.put(node.id(), task);
                 return;
@@ -217,10 +215,10 @@ public class GraphicalJSONWorkflowModel extends AbstractXDSLModelIO implements I
                 // create inputData
                 GInputData gInputData;
                 if (node.data().has("name")) {
-                    gInputData = new GInputData(node.data().get("name").asText(), factory);
+                    gInputData = new GInputData(gCompositeWorkflow, node.data().get("name").asText(), factory);
                 }
                 else{
-                    gInputData = new GInputData("inputData", factory);
+                    gInputData = new GInputData(gCompositeWorkflow, "inputData", factory);
                 }
                 gCompositeWorkflow.addInputData(gInputData);
                 this.gIDs.put(node.id(), gInputData);
@@ -235,10 +233,10 @@ public class GraphicalJSONWorkflowModel extends AbstractXDSLModelIO implements I
                 // create outputData
                 GOutputData gOutputData;
                 if (node.data().has("name")) {
-                    gOutputData = new GOutputData(node.data().get("name").asText(), factory);
+                    gOutputData = new GOutputData(gCompositeWorkflow, node.data().get("name").asText(), factory);
                 }
                 else{
-                    gOutputData = new GOutputData("outputData", factory);
+                    gOutputData = new GOutputData(gCompositeWorkflow,"outputData", factory);
                 }
                 gCompositeWorkflow.addOutputData(gOutputData);
                 this.gIDs.put(node.id(), gOutputData);

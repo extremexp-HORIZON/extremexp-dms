@@ -12,7 +12,7 @@ public class GAssembledWorkflow extends GSingleObject{
     public GAssembledWorkflow(GCompositeWorkflow parent, XDSLFactory factory){
         this.eObject = factory.createAssembledWorkflow();
         this.eObject.setParent(parent.getEObject());
-        this.eObject.setName(this.ID(parent.getEObject().getName() + "_assembled"));
+        this.eObject.setName(this.ID(parent, parent.getEObject().getName() + "_assembled"));
 
     }
 
@@ -22,8 +22,8 @@ public class GAssembledWorkflow extends GSingleObject{
     }
 
     public void addTaskConfiguration(GTask task, JsonNode variant, XDSLFactory factory) {
-        TaskConfiguration taskConfiguration = factory.createTaskConfiguration();
-        taskConfiguration.setTask(task.getEObject());
+
+        GTaskConfiguration taskConfiguration =  new GTaskConfiguration(task, factory);
 
         TaskConfigurationBody taskConfigurationBody = factory.createTaskConfigurationBody();
         taskConfiguration.setTaskConfiguration(taskConfigurationBody);
@@ -33,7 +33,7 @@ public class GAssembledWorkflow extends GSingleObject{
 
         variant.get("parameters").forEach(paramData -> {
             Param param = factory.createParam();
-            param.setName(this.ID(paramData.get("name").asText()));
+            param.setName(this.ID(taskConfiguration, paramData.get("name").asText()));
             if ( paramData.get("values").isArray()){
                 paramData.get("values").forEach(value -> {
                     switch (paramData.get("type").asText()){
@@ -56,6 +56,6 @@ public class GAssembledWorkflow extends GSingleObject{
             taskConfigurationBody.getParams().add(param);
         });
 
-        this.eObject.getTaskConfigurations().add(taskConfiguration);
+        this.eObject.getTaskConfigurations().add(taskConfiguration.getEObject());
     }
 }

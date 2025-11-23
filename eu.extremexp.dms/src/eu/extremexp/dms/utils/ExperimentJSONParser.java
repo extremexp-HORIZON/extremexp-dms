@@ -2,10 +2,10 @@ package eu.extremexp.dms.utils;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import eu.extremexp.dms.GraphicalJSONExperimentModel;
+import eu.extremexp.dms.jmodel.GraphicalJSONExperimentModel;
 import eu.extremexp.dms.GraphicalJSONModel;
-import eu.extremexp.dms.GraphicalJSONWorkflowModel;
-import eu.extremexp.dms.XDSLModelIO;
+import eu.extremexp.dms.jmodel.GraphicalJSONWorkflowModel;
+import eu.extremexp.dsl.xDSL.Workflow;
 
 import java.io.IOException;
 import java.util.*;
@@ -14,7 +14,7 @@ public class ExperimentJSONParser {
     /**
      * Immutable pair of source/target nodes for an edge.
      */
-
+    GraphicalJSONModel graphicalJSONModel;
     private final List<WorkflowJSONParser> workflowJSONParsers;
 
     private final List<JStep> jSteps;
@@ -51,7 +51,7 @@ public class ExperimentJSONParser {
                );
             }
 
-            GraphicalJSONModel graphicalJSONModel = new GraphicalJSONModel();
+            this.graphicalJSONModel = new GraphicalJSONModel();
             List<GraphicalJSONWorkflowModel> graphicalJSONWorkflowModels = new ArrayList<>();
             JsonNode workflows = root.path("workflows");
             for (var wjson : workflows){
@@ -59,7 +59,9 @@ public class ExperimentJSONParser {
                 var graphicalJSONxDSLModelIO = new GraphicalJSONWorkflowModel(wjs.getNodes(), wjs.getEdges(), wjson.get("name").asText());
                 graphicalJSONWorkflowModels.add(graphicalJSONxDSLModelIO);
                 workflowJSONParsers.add(wjs);
-                graphicalJSONModel.addWorkflows(graphicalJSONxDSLModelIO);
+                for (Workflow wf : graphicalJSONxDSLModelIO){
+                    this.graphicalJSONModel.addWorkflow(wf);
+                }
             }
 
             GraphicalJSONExperimentModel graphicalJSONExperimentModel = new GraphicalJSONExperimentModel(
@@ -67,29 +69,14 @@ public class ExperimentJSONParser {
                     graphicalJSONWorkflowModels ,
                     experiment.get("name").asText());
 
-            graphicalJSONModel.addExperiment(graphicalJSONExperimentModel);
-
-            XDSLModelIO xdslModelIO = new XDSLModelIO(graphicalJSONModel);
-            System.out.println(xdslModelIO.formattedSerialize());
+            this.graphicalJSONModel.addExperiment(graphicalJSONExperimentModel);
 
         } catch (IOException e) {
             throw new IllegalArgumentException("Failed to parse JSON content", e);
         }
     }
 
-    private static String textOrNull(JsonNode node, String field) {
-        JsonNode v = node.get(field);
-        return v != null && !v.isNull() ? v.asText() : null;
+    public GraphicalJSONModel getGraphicalJSONModel() {
+        return this.graphicalJSONModel;
     }
-
-    private static JsonNode jsonOrEmpty(JsonNode node, String field) {
-        JsonNode v = node.get(field);
-        return v != null && !v.isNull() ? v : null;
-    }
-
-
-    public List<JStep> getSteps() {
-        return List.copyOf(this.jSteps);
-    }
-
 }

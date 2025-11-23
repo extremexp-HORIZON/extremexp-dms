@@ -23,7 +23,7 @@ public class GCompositeWorkflow extends GSingleObject{
 
     public GCompositeWorkflow(String name, XDSLFactory eInstance){
         this.eObject = eInstance.createCompositeWorkflow();
-        this.eObject.setName(this.ID(name));
+        this.eObject.setName(this.ID(this, name));
 
         this.gTasks = new ArrayList<>();
         this.gInputs = new ArrayList<>();

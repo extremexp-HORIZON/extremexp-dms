@@ -1,0 +1,770 @@
+{
+    "experiment": {
+        "name": "Experiment-1763370704",
+        "steps": [
+            {
+                "collapsed": false,
+                "executionOrder": 1,
+                "id": "step-1763370712306",
+                "name": "oti einai",
+                "spaces": [
+                    {
+                        "gridSearchEnabled": true,
+                        "id": "space-1763370713865",
+                        "name": "New Space",
+                        "searchMethod": "grid",
+                        "status": "idle",
+                        "steps": [
+                            {
+                                "id": "task-hkAEOPZIwN1nU9yq6i2wd-1763370717895",
+                                "name": "task",
+                                "tasks": [
+                                    {
+                                        "description": "no description",
+                                        "hyperParameters": [
+                                            {
+                                                "default": 4,
+                                                "inputType": "range",
+                                                "name": "New Parameter",
+                                                "range": [
+                                                    4,
+                                                    10
+                                                ],
+                                                "type": "integer",
+                                                "values": [
+                                                    4,
+                                                    6,
+                                                    10
+                                                ]
+                                            }
+                                        ],
+                                        "id": "variant-1-90rF_xyYhS2UNOMMn5f8v",
+                                        "implementationRef": "",
+                                        "name": "task",
+                                        "selected": true,
+                                        "type": "algorithm"
+                                    }
+                                ],
+                                "type": "task"
+                            },
+                            {
+                                "id": "task-6tSzdCxF2pfjztCSzNus_-1763370717895",
+                                "name": "task2",
+                                "tasks": [
+                                    {
+                                        "description": "no description",
+                                        "hyperParameters": [],
+                                        "id": "variant-1-RK2UHsZwzWJTwlZs14gDe",
+                                        "implementationRef": "",
+                                        "name": "task2",
+                                        "selected": true,
+                                        "type": "algorithm"
+                                    }
+                                ],
+                                "type": "task"
+                            }
+                        ],
+                        "workflow_id": "ntinos-09565400-5205-46d1-8aee-a87e12afae37-1763370572"
+                    },
+                    {
+                        "id": "space-1763379648256",
+                        "name": "New Space",
+                        "steps": [
+                            {
+                                "id": "task-qlx2Zx9nimYFYfgyBeOUf-1763379654719",
+                                "name": "task1",
+                                "type": "task",
+                                "tasks": [
+                                    {
+                                        "id": "variant-1-rXUtoiOdg8CW2b8m3u9Ub",
+                                        "name": "task1",
+                                        "type": "algorithm",
+                                        "implementationRef": "",
+                                        "description": "no description",
+                                        "hyperParameters": [
+                                            {
+                                                "name": "New Parameter",
+                                                "type": "string",
+                                                "default": "dummy1",
+                                                "values": [
+                                                    "dummy1",
+                                                    "dummy2"
+                                                ]
+                                            }
+                                        ],
+                                        "selected": true
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "task-VKi0XBjyU1CvWJQw2WiHp-1763379654719",
+                                "name": "task2",
+                                "type": "task",
+                                "tasks": [
+                                    {
+                                        "id": "variant-1-WjwaG0pt7Oi6n5dOMEY4i",
+                                        "name": "task2",
+                                        "type": "algorithm",
+                                        "implementationRef": "",
+                                        "description": "no description",
+                                        "hyperParameters": [],
+                                        "selected": false
+                                    },
+                                    {
+                                        "id": "variant-2-454-NeVSneRivsPZdTDbF",
+                                        "name": "generic task",
+                                        "type": "algorithm",
+                                        "implementationRef": "",
+                                        "description": "no description",
+                                        "hyperParameters": [
+                                            {
+                                                "name": "Dummy_Param1",
+                                                "type": "integer",
+                                                "default": 2,
+                                                "values": [
+                                                    2
+                                                ]
+                                            },
+                                            {
+                                                "name": "Dummy_Param2",
+                                                "type": "integer",
+                                                "default": 3,
+                                                "values": [
+                                                    3,
+                                                    4
+                                                ],
+                                                "inputType": "range",
+                                                "range": [
+                                                    3,
+                                                    4
+                                                ]
+                                            }
+                                        ],
+                                        "selected": true
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "task-J76teaMX8BOaLqyxrtVJk-1763379654719",
+                                "name": "task3",
+                                "type": "task",
+                                "tasks": [
+                                    {
+                                        "id": "variant-1-Ilime7AXWSsGX_B6HVNbp",
+                                        "name": "task3",
+                                        "type": "algorithm",
+                                        "implementationRef": "",
+                                        "description": "no description",
+                                        "hyperParameters": [],
+                                        "selected": true
+                                    }
+                                ]
+                            }
+                        ],
+                        "status": "idle",
+                        "gridSearchEnabled": true,
+                        "searchMethod": "grid",
+                        "workflow_id": "ntinos-b1cddc40-9827-4c38-a9d9-ab4b69887ef3-1763379476"
+                    }
+                ],
+                "status": "idle",
+                "type": "container"
+            }
+        ]
+    },
+    "workflows": [
+        {
+            "_id": "691b0914b0934d90602b0dc6",
+            "create_at": 1763379476,
+            "graphical_model": {
+                "edges": [
+                    {
+                        "data": {},
+                        "id": "ATLg8xvPk5caviokEmLzU",
+                        "markerEnd": {
+                            "color": "#000",
+                            "height": 20,
+                            "type": "arrow",
+                            "width": 20
+                        },
+                        "source": "start-xHXQO7l2hETyC0OBzV9DM",
+                        "sourceHandle": null,
+                        "style": {
+                            "stroke": "#000",
+                            "strokeWidth": 1.5
+                        },
+                        "target": "task-qlx2Zx9nimYFYfgyBeOUf",
+                        "targetHandle": "t-top",
+                        "type": "regular"
+                    },
+                    {
+                        "data": {},
+                        "id": "gg6NSwSnbvY_VU6-vTdrS",
+                        "markerEnd": {
+                            "color": "#000",
+                            "height": 20,
+                            "type": "arrow",
+                            "width": 20
+                        },
+                        "source": "task-qlx2Zx9nimYFYfgyBeOUf",
+                        "sourceHandle": "s-bottom",
+                        "style": {
+                            "stroke": "#000",
+                            "strokeWidth": 1.5
+                        },
+                        "target": "task-VKi0XBjyU1CvWJQw2WiHp",
+                        "targetHandle": "t-top",
+                        "type": "regular"
+                    },
+                    {
+                        "data": {},
+                        "id": "GWJ6fuIQXAkEMZ7yF6FDq",
+                        "markerEnd": {
+                            "color": "#000",
+                            "height": 20,
+                            "type": "arrow",
+                            "width": 20
+                        },
+                        "source": "task-VKi0XBjyU1CvWJQw2WiHp",
+                        "sourceHandle": "s-bottom",
+                        "style": {
+                            "stroke": "#000",
+                            "strokeWidth": 1.5
+                        },
+                        "target": "task-J76teaMX8BOaLqyxrtVJk",
+                        "targetHandle": "t-top",
+                        "type": "regular"
+                    },
+                    {
+                        "data": {},
+                        "id": "fG4779dhzhFBCWnay9hAA",
+                        "markerEnd": {
+                            "color": "#000",
+                            "height": 20,
+                            "type": "arrow",
+                            "width": 20
+                        },
+                        "source": "task-J76teaMX8BOaLqyxrtVJk",
+                        "sourceHandle": "s-bottom",
+                        "style": {
+                            "stroke": "#000",
+                            "strokeWidth": 1.5
+                        },
+                        "target": "end-RznuzR-xmNGS3bcMufO3h",
+                        "targetHandle": null,
+                        "type": "regular"
+                    },
+                    {
+                        "animated": true,
+                        "data": {},
+                        "id": "gllc5iONQAeYLKn3RdkUW",
+                        "markerEnd": {
+                            "color": "#000",
+                            "height": 20,
+                            "type": "arrow",
+                            "width": 20
+                        },
+                        "source": "data-T5pJ3ZqS-d3OCKH2OLPsc",
+                        "sourceHandle": null,
+                        "style": {
+                            "stroke": "#000",
+                            "strokeWidth": 1.5
+                        },
+                        "target": "task-J76teaMX8BOaLqyxrtVJk",
+                        "targetHandle": "t-top",
+                        "type": "dataflow"
+                    }
+                ],
+                "nodes": [
+                    {
+                        "data": {},
+                        "dragging": false,
+                        "height": 31,
+                        "id": "start-xHXQO7l2hETyC0OBzV9DM",
+                        "position": {
+                            "x": 849,
+                            "y": -45.5
+                        },
+                        "positionAbsolute": {
+                            "x": 849,
+                            "y": -45.5
+                        },
+                        "selected": false,
+                        "type": "start",
+                        "width": 31
+                    },
+                    {
+                        "data": {},
+                        "dragging": false,
+                        "height": 32,
+                        "id": "end-RznuzR-xmNGS3bcMufO3h",
+                        "position": {
+                            "x": 855.5,
+                            "y": 452.75
+                        },
+                        "positionAbsolute": {
+                            "x": 855.5,
+                            "y": 452.75
+                        },
+                        "selected": false,
+                        "type": "end",
+                        "width": 32
+                    },
+                    {
+                        "data": {
+                            "currentVariant": "variant-1-rXUtoiOdg8CW2b8m3u9Ub",
+                            "variants": [
+                                {
+                                    "description": "no description",
+                                    "graphical_model": {
+                                        "edges": [],
+                                        "nodes": []
+                                    },
+                                    "id_task": "variant-1-rXUtoiOdg8CW2b8m3u9Ub",
+                                    "implementationRef": "",
+                                    "isAbstract": true,
+                                    "is_composite": false,
+                                    "name": "task1",
+                                    "parameters": [
+                                        {
+                                            "abstract": false,
+                                            "id": "parameter-TXIPBNRWe2W8dtkaB4Nfk",
+                                            "name": "New Parameter",
+                                            "type": "string",
+                                            "values": [
+                                                "dummy1",
+                                                "dummy2"
+                                            ]
+                                        }
+                                    ],
+                                    "variant": 1
+                                }
+                            ]
+                        },
+                        "dragging": false,
+                        "height": 91,
+                        "id": "task-qlx2Zx9nimYFYfgyBeOUf",
+                        "position": {
+                            "x": 815,
+                            "y": 41.75
+                        },
+                        "positionAbsolute": {
+                            "x": 815,
+                            "y": 41.75
+                        },
+                        "selected": false,
+                        "type": "task",
+                        "width": 103
+                    },
+                    {
+                        "data": {
+                            "currentVariant": "variant-2-454-NeVSneRivsPZdTDbF",
+                            "variants": [
+                                {
+                                    "description": "no description",
+                                    "graphical_model": {
+                                        "edges": [],
+                                        "nodes": []
+                                    },
+                                    "id_task": "variant-1-WjwaG0pt7Oi6n5dOMEY4i",
+                                    "implementationRef": "",
+                                    "isAbstract": true,
+                                    "is_composite": false,
+                                    "name": "task2",
+                                    "parameters": [],
+                                    "variant": 1
+                                },
+                                {
+                                    "description": "no description",
+                                    "graphical_model": {
+                                        "edges": [
+                                            {
+                                                "data": {},
+                                                "id": "n9rgUYrI3v4MIdxqlmL5X",
+                                                "markerEnd": {
+                                                    "color": "#000",
+                                                    "height": 20,
+                                                    "type": "arrow",
+                                                    "width": 20
+                                                },
+                                                "source": "start-ByGL5VPXc-nt1FCFvfR9p",
+                                                "sourceHandle": null,
+                                                "style": {
+                                                    "stroke": "#000",
+                                                    "strokeWidth": 1.5
+                                                },
+                                                "target": "task-mDtzBp0thidem7mN7l1Tn",
+                                                "targetHandle": "t-top",
+                                                "type": "regular"
+                                            },
+                                            {
+                                                "data": {},
+                                                "id": "BtI37llMQ9KCeqNC0Tsks",
+                                                "markerEnd": {
+                                                    "color": "#000",
+                                                    "height": 20,
+                                                    "type": "arrow",
+                                                    "width": 20
+                                                },
+                                                "source": "task-mDtzBp0thidem7mN7l1Tn",
+                                                "sourceHandle": "s-bottom",
+                                                "style": {
+                                                    "stroke": "#000",
+                                                    "strokeWidth": 1.5
+                                                },
+                                                "target": "end-O5OF6FMQ6k5IPrxJVb6zl",
+                                                "targetHandle": null,
+                                                "type": "regular"
+                                            }
+                                        ],
+                                        "nodes": [
+                                            {
+                                                "data": {},
+                                                "height": 36,
+                                                "id": "start-ByGL5VPXc-nt1FCFvfR9p",
+                                                "position": {
+                                                    "x": 358,
+                                                    "y": 134
+                                                },
+                                                "type": "start",
+                                                "width": 31
+                                            },
+                                            {
+                                                "data": {
+                                                    "currentVariant": "variant-1-5p7Af-UByzwnGdS7CSDsW",
+                                                    "variants": [
+                                                        {
+                                                            "description": "no description",
+                                                            "graphical_model": {
+                                                                "edges": [],
+                                                                "nodes": []
+                                                            },
+                                                            "id_task": "variant-1-5p7Af-UByzwnGdS7CSDsW",
+                                                            "implementationRef": "",
+                                                            "isAbstract": true,
+                                                            "is_composite": false,
+                                                            "name": "task",
+                                                            "parameters": [],
+                                                            "variant": 1
+                                                        }
+                                                    ]
+                                                },
+                                                "dragging": false,
+                                                "height": 44,
+                                                "id": "task-mDtzBp0thidem7mN7l1Tn",
+                                                "position": {
+                                                    "x": 322.2776598454062,
+                                                    "y": 249.78988658918223
+                                                },
+                                                "positionAbsolute": {
+                                                    "x": 322.2776598454062,
+                                                    "y": 249.78988658918223
+                                                },
+                                                "selected": true,
+                                                "type": "task",
+                                                "width": 102
+                                            },
+                                            {
+                                                "data": {},
+                                                "dragging": false,
+                                                "height": 37,
+                                                "id": "end-O5OF6FMQ6k5IPrxJVb6zl",
+                                                "position": {
+                                                    "x": 357.1145489851613,
+                                                    "y": 397.100160665861
+                                                },
+                                                "positionAbsolute": {
+                                                    "x": 357.1145489851613,
+                                                    "y": 397.100160665861
+                                                },
+                                                "selected": false,
+                                                "type": "end",
+                                                "width": 32
+                                            }
+                                        ]
+                                    },
+                                    "id_task": "variant-2-454-NeVSneRivsPZdTDbF",
+                                    "implementationRef": "",
+                                    "isAbstract": true,
+                                    "is_composite": true,
+                                    "name": "generic task",
+                                    "parameters": [
+                                        {
+                                            "abstract": false,
+                                            "id": "parameter-6rLupaWETWLc8mY1ke2ZU",
+                                            "name": "Dummy_Param1",
+                                            "type": "integer",
+                                            "values": [
+                                                2
+                                            ]
+                                        },
+                                        {
+                                            "abstract": false,
+                                            "id": "parameter-mneZRxPU1KFTV4KtLTjCw",
+                                            "name": "Dummy_Param2",
+                                            "type": "integer",
+                                            "values": [
+                                                3,
+                                                4
+                                            ]
+                                        }
+                                    ],
+                                    "variant": 2
+                                }
+                            ]
+                        },
+                        "dragging": false,
+                        "height": 143,
+                        "id": "task-VKi0XBjyU1CvWJQw2WiHp",
+                        "position": {
+                            "x": 816.5,
+                            "y": 168.25
+                        },
+                        "positionAbsolute": {
+                            "x": 816.5,
+                            "y": 168.25
+                        },
+                        "selected": false,
+                        "type": "task",
+                        "width": 109
+                    },
+                    {
+                        "data": {
+                            "currentVariant": "variant-1-Ilime7AXWSsGX_B6HVNbp",
+                            "variants": [
+                                {
+                                    "description": "no description",
+                                    "graphical_model": {
+                                        "edges": [],
+                                        "nodes": []
+                                    },
+                                    "id_task": "variant-1-Ilime7AXWSsGX_B6HVNbp",
+                                    "implementationRef": "",
+                                    "isAbstract": true,
+                                    "is_composite": false,
+                                    "name": "task3",
+                                    "parameters": [],
+                                    "variant": 1
+                                }
+                            ]
+                        },
+                        "dragging": false,
+                        "height": 44,
+                        "id": "task-J76teaMX8BOaLqyxrtVJk",
+                        "position": {
+                            "x": 822,
+                            "y": 344.25
+                        },
+                        "positionAbsolute": {
+                            "x": 822,
+                            "y": 344.25
+                        },
+                        "selected": false,
+                        "type": "task",
+                        "width": 100
+                    },
+                    {
+                        "data": {},
+                        "dragging": false,
+                        "height": 77,
+                        "id": "data-T5pJ3ZqS-d3OCKH2OLPsc",
+                        "position": {
+                            "x": 627,
+                            "y": 225.75
+                        },
+                        "positionAbsolute": {
+                            "x": 627,
+                            "y": 225.75
+                        },
+                        "selected": true,
+                        "type": "data",
+                        "width": 100
+                    }
+                ]
+            },
+            "id_workflow": "ntinos-b1cddc40-9827-4c38-a9d9-ab4b69887ef3-1763379476",
+            "name": "Workflow-1763379476",
+            "update_at": 1763379640
+        },
+        {
+            "_id": "691ae64c51f1829716ecb5b1",
+            "create_at": 1763370572,
+            "graphical_model": {
+                "edges": [
+                    {
+                        "data": {},
+                        "id": "dcxQKahvK_v37WuYE7vIg",
+                        "markerEnd": {
+                            "color": "#000",
+                            "height": 20,
+                            "type": "arrow",
+                            "width": 20
+                        },
+                        "source": "start-FkMLWaSBN94cN1wQYgSvP",
+                        "sourceHandle": null,
+                        "style": {
+                            "stroke": "#000",
+                            "strokeWidth": 1.5
+                        },
+                        "target": "task-hkAEOPZIwN1nU9yq6i2wd",
+                        "targetHandle": "t-top",
+                        "type": "regular"
+                    },
+                    {
+                        "data": {},
+                        "id": "_gY-zYpNlmcAzJ5bd26O9",
+                        "markerEnd": {
+                            "color": "#000",
+                            "height": 20,
+                            "type": "arrow",
+                            "width": 20
+                        },
+                        "source": "task-hkAEOPZIwN1nU9yq6i2wd",
+                        "sourceHandle": "s-bottom",
+                        "style": {
+                            "stroke": "#000",
+                            "strokeWidth": 1.5
+                        },
+                        "target": "task-6tSzdCxF2pfjztCSzNus_",
+                        "targetHandle": "t-top",
+                        "type": "regular"
+                    },
+                    {
+                        "data": {},
+                        "id": "LdP2CSslPYtqtiuauNPq5",
+                        "markerEnd": {
+                            "color": "#000",
+                            "height": 20,
+                            "type": "arrow",
+                            "width": 20
+                        },
+                        "source": "task-6tSzdCxF2pfjztCSzNus_",
+                        "sourceHandle": "s-bottom",
+                        "style": {
+                            "stroke": "#000",
+                            "strokeWidth": 1.5
+                        },
+                        "target": "end-qXmwPj80ooLITNBk9tmyH",
+                        "targetHandle": null,
+                        "type": "regular"
+                    }
+                ],
+                "nodes": [
+                    {
+                        "data": {
+                            "currentVariant": "variant-1-90rF_xyYhS2UNOMMn5f8v",
+                            "variants": [
+                                {
+                                    "description": "no description",
+                                    "graphical_model": {
+                                        "edges": [],
+                                        "nodes": []
+                                    },
+                                    "id_task": "variant-1-90rF_xyYhS2UNOMMn5f8v",
+                                    "implementationRef": "",
+                                    "isAbstract": true,
+                                    "is_composite": false,
+                                    "name": "task",
+                                    "parameters": [
+                                        {
+                                            "abstract": false,
+                                            "id": "parameter-Vfp3YZ1vvbBNIvbXVha_S",
+                                            "name": "New Parameter",
+                                            "type": "integer",
+                                            "values": [
+                                                4,
+                                                6,
+                                                10
+                                            ]
+                                        }
+                                    ],
+                                    "variant": 1
+                                }
+                            ]
+                        },
+                        "dragging": false,
+                        "height": 91,
+                        "id": "task-hkAEOPZIwN1nU9yq6i2wd",
+                        "position": {
+                            "x": 468,
+                            "y": 172
+                        },
+                        "positionAbsolute": {
+                            "x": 468,
+                            "y": 172
+                        },
+                        "selected": false,
+                        "type": "task",
+                        "width": 103
+                    },
+                    {
+                        "data": {},
+                        "height": 31,
+                        "id": "start-FkMLWaSBN94cN1wQYgSvP",
+                        "position": {
+                            "x": 503.75,
+                            "y": 102.5
+                        },
+                        "type": "start",
+                        "width": 31
+                    },
+                    {
+                        "data": {},
+                        "dragging": false,
+                        "height": 32,
+                        "id": "end-qXmwPj80ooLITNBk9tmyH",
+                        "position": {
+                            "x": 499.75,
+                            "y": 432.5
+                        },
+                        "positionAbsolute": {
+                            "x": 499.75,
+                            "y": 432.5
+                        },
+                        "selected": false,
+                        "type": "end",
+                        "width": 32
+                    },
+                    {
+                        "data": {
+                            "currentVariant": "variant-1-RK2UHsZwzWJTwlZs14gDe",
+                            "variants": [
+                                {
+                                    "description": "no description",
+                                    "graphical_model": {
+                                        "edges": [],
+                                        "nodes": []
+                                    },
+                                    "id_task": "variant-1-RK2UHsZwzWJTwlZs14gDe",
+                                    "implementationRef": "",
+                                    "isAbstract": true,
+                                    "is_composite": false,
+                                    "name": "task2",
+                                    "parameters": [],
+                                    "variant": 1
+                                }
+                            ]
+                        },
+                        "dragging": false,
+                        "height": 44,
+                        "id": "task-6tSzdCxF2pfjztCSzNus_",
+                        "position": {
+                            "x": 470.75,
+                            "y": 332
+                        },
+                        "positionAbsolute": {
+                            "x": 470.75,
+                            "y": 332
+                        },
+                        "selected": true,
+                        "type": "task",
+                        "width": 100
+                    }
+                ]
+            },
+            "id_workflow": "ntinos-09565400-5205-46d1-8aee-a87e12afae37-1763370572",
+            "name": "Workflow-1763370572",
+            "update_at": 1763370679
+        }
+    ]
+}

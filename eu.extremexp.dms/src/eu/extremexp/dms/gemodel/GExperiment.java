@@ -25,7 +25,7 @@ public class GExperiment extends GSingleObject {
 
     public GExperiment(String name, XDSLFactory factory){
         this.eObject = factory.createExperiment();
-        this.eObject.setName(this.ID(name));
+        this.eObject.setName(this.ID(this, name));
         spaceOrder = new HashMap<>();
 
 
@@ -59,7 +59,6 @@ public class GExperiment extends GSingleObject {
         for (int i = 0; i< spaceOrder.size() ; i++){
             int executionOrder = i + 1 ; // the order starts from 1
             if (spaceOrder.containsKey(executionOrder)){
-                // TODO fix the below for parallel spaces
                 List<Space> spaces = spaceOrder.get(executionOrder);
                 if (spaces.size() == 1){
                     gRegularExpLink.addSingleNode(spaces.getFirst(), factory);

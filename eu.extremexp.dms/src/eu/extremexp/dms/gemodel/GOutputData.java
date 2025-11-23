@@ -7,9 +7,9 @@ import eu.extremexp.dsl.xDSL.XDSLFactory;
 public class GOutputData extends GSingleObject{
     OutputData eObject;
 
-    public GOutputData(String id, XDSLFactory factory) {
+    public GOutputData(GCompositeWorkflow gCompositeWorkflow, String id, XDSLFactory factory) {
         eObject = factory.createOutputData();
-        eObject.setName(this.ID(id));
+        eObject.setName(this.ID(gCompositeWorkflow, id));
     }
 
     @Override

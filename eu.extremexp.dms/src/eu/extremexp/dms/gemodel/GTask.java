@@ -10,9 +10,9 @@ public class GTask extends GSingleObject{
     Task eObject;
 
 
-    public GTask(String name, XDSLFactory factory){
+    public GTask( GCompositeWorkflow gCompositeWorkflow, String name, XDSLFactory factory){
         eObject = factory.createTask();
-        eObject.setName(this.ID(name));
+        eObject.setName(this.ID(gCompositeWorkflow, name));
         eObject.setAbstract(true);
     }
 

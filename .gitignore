@@ -26,4 +26,4 @@ dist/
 Thumbs.db
 
 # java built
-*.class
+**/*.class

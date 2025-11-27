@@ -1,9 +1,11 @@
 package eu.extremexp.dms;
 
 import eu.extremexp.dms.jmodel.GraphicalJSONExperimentModel;
+import eu.extremexp.dsl.xDSL.CompositeWorkflow;
 import eu.extremexp.dsl.xDSL.Workflow;
 import eu.extremexp.dsl.xDSL.XDSLFactory;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.serializer.impl.Serializer;
 
 
@@ -23,12 +25,57 @@ public class GraphicalJSONModel extends AbstractXDSLModelIO{
     public void addExperiment(GraphicalJSONExperimentModel graphicalJSONExperimentModel){
         this.root.getExperiments().add(graphicalJSONExperimentModel.getExperiment());
     }
-    public String formattedSerialize(){
+
+    public String getRootDSL(){
         Serializer serializer = injector.getInstance(Serializer.class);
         String dslText = serializer.serialize(this.root);
 
         return this.format(dslText);
     }
+
+    public String getWorkflowsDSL(){
+        Serializer serializer = injector.getInstance(Serializer.class);
+        StringBuilder dslBuild = new StringBuilder();
+
+        // CompositeWorkflow first
+        for (EObject workflow: this.root.getWorkflows()){
+            if (workflow instanceof CompositeWorkflow){
+                String dslText = serializer.serialize(workflow);
+                dslBuild.append(dslText).append("\n\n");
+            }
+        }
+
+        for (EObject workflow: this.root.getWorkflows()){
+            if (!(workflow instanceof CompositeWorkflow)){
+                String dslText = serializer.serialize(workflow);
+                dslBuild.append(dslText).append("\n\n");
+            }
+        }
+        return this.format(dslBuild.toString());
+    }
+
+    public String getExperimentDSL(){
+        Serializer serializer = injector.getInstance(Serializer.class);
+        StringBuilder dslBuild = new StringBuilder();
+
+        // create imports
+        for (EObject workflow: this.root.getWorkflows()){
+            if (workflow instanceof CompositeWorkflow){
+                dslBuild.append("import \"").append(((CompositeWorkflow) workflow).getName()).append(".xxp\" ;\n\n");
+            }
+        }
+
+        for (EObject experiment: this.root.getExperiments()){
+            String dslText = serializer.serialize(experiment);
+
+            dslBuild.append(dslText);
+            dslBuild.append("\n");
+
+        }
+        dslBuild.append("\n");
+        return this.format(dslBuild.toString());
+    }
+
 
 
     private String format(String dsl){

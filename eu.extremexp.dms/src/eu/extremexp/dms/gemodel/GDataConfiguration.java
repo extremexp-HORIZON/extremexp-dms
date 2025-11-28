@@ -17,12 +17,12 @@ public class GDataConfiguration extends GSingleObject{
             eObject.setPath(data.get("path").asText());
         }
 
-        if (data.has("project")){
-            eObject.setProject(data.get("project").asText());
+        if (data.has("ddmProject")){
+            eObject.setProject(data.get("ddmProject").asText());
         }
 
-        if (data.has("name")){
-            eObject.setName(data.get("name").asText());
+        if (data.has("ddmName")){
+            eObject.setName(data.get("ddmName").asText());
         }
 
     }

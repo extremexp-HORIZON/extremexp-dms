@@ -13,10 +13,17 @@ public class GDataConfiguration extends GSingleObject{
         eObject = factory.createDataConfiguration();
         eObject.setData(dataRef);
 
-        if (data.has("field")){
-            eObject.setPath(data.get("field").asText());
+        if (data.has("path")){
+            eObject.setPath(data.get("path").asText());
         }
 
+        if (data.has("project")){
+            eObject.setProject(data.get("project").asText());
+        }
+
+        if (data.has("name")){
+            eObject.setName(data.get("name").asText());
+        }
 
     }
 

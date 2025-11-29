@@ -20,27 +20,38 @@ public class GSingleObject implements GObject{
     }
 
     protected String ID(GObject container, String name){
-        name = name.replace("-", "_");
-        name = name.replace(" ", "_");
+        return ID(container, name, true);
+    }
+
+    protected String ID(GObject container, String name, boolean transformName){
+        String transformedName = name;
+        if (transformName) {
+            transformedName = name.replace("-", "_");
+            transformedName = transformedName.replace(" ", "_");
+        } else {
+            // Still replace spaces even when preserving hyphens
+            transformedName = name.replace(" ", "_");
+        }
+
         if (uniqueNames.containsKey(container)){
             HashMap<String, Integer> subNames = uniqueNames.get(container);
-            if (subNames.containsKey(name)) {
-                int counter = subNames.get(name)+1;
-                subNames.put(name, counter);
-                name = name + ("_" + counter);
+            if (subNames.containsKey(transformedName)) {
+                int counter = subNames.get(transformedName)+1;
+                subNames.put(transformedName, counter);
+                transformedName = transformedName + ("_" + counter);
 
             }
             else{
-                subNames.put(name, 0);
+                subNames.put(transformedName, 0);
             }
         }
         else{
             uniqueNames.put(container, new HashMap<>());
             HashMap<String, Integer> subNames = uniqueNames.get(container);
-            subNames.put(name, 0);
+            subNames.put(transformedName, 0);
         }
 
-        return name;
+        return transformedName;
     }
 
 

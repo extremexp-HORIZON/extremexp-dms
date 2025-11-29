@@ -23,7 +23,8 @@ public class GCompositeWorkflow extends GSingleObject{
 
     public GCompositeWorkflow(String name, XDSLFactory eInstance){
         this.eObject = eInstance.createCompositeWorkflow();
-        this.eObject.setName(this.ID(this, name));
+        // Preserve hyphens in workflow names by passing false
+        this.eObject.setName(this.ID(this, name, false));
 
         this.gTasks = new ArrayList<>();
         this.gInputs = new ArrayList<>();

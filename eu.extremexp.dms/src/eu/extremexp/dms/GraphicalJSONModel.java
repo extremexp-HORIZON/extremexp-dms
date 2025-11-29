@@ -81,6 +81,7 @@ public class GraphicalJSONModel extends AbstractXDSLModelIO{
     private String format(String dsl){
         int indent = 0;
         boolean newLine = false;
+        boolean firstToken = true;
         StringBuilder newText = new StringBuilder();
         String lastToken = "";
         for (var token : dsl.split(" ") ){
@@ -108,13 +109,18 @@ public class GraphicalJSONModel extends AbstractXDSLModelIO{
                         newText.append("\n");
                         newText.append("\t".repeat(Math.max(0, indent)));
                         newText.append(token);
+                        firstToken = false;
                     }
                     else{
-                        if (token.equals(".") || lastToken.equals(".")){
+                        if (token.equals(".") || lastToken.equals(".") || token.equals("(") || lastToken.equals("(")){
                             newText.append(token);
                         }
                         else{
-                            newText.append(" ").append(token);
+                            if (!firstToken) {
+                                newText.append(" ");
+                            }
+                            newText.append(token);
+                            firstToken = false;
                         }
                     }
                     newLine = false;

@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.Map;
 
 public class JCompositeWorkflow {
-    Map<String, JNode> jNodes;
-    Map<String, JEdge> jEdges;
+    public Map<String, JNode> jNodes;
+    public Map<String, JEdge> jEdges;
     CompositeWorkflow compositeWorkflow;
 
     public JCompositeWorkflow(CompositeWorkflow compositeWorkflow){

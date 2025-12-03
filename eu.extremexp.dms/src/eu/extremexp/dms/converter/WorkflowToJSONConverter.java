@@ -60,8 +60,8 @@ public class WorkflowToJSONConverter {
 //
 //            // Process links (control flow)
 //            for (Link link : compositeWorkflow.getLinks()) {
-//                if (link instanceof ChainLink) {
-//                    ChainLink chainLink = (ChainLink) link;
+//                if (link instanceof RegularLink) {
+//                    RegularLink chainLink = (RegularLink) link;
 //                    processChainLink(chainLink, edgesArray, nodesArray);
 //                }
 //            }
@@ -264,7 +264,7 @@ public class WorkflowToJSONConverter {
 //        return node;
 //    }
 //
-//    private void processChainLink(ChainLink chainLink, ArrayNode edgesArray, ArrayNode nodesArray) {
+//    private void processChainLink(RegularLink chainLink, ArrayNode edgesArray, ArrayNode nodesArray) {
 //        // Add start node if not exists
 //        if (chainLink.getStart() != null) {
 //            Event startEvent = chainLink.getStart();

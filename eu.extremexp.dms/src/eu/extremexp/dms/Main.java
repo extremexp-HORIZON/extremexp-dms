@@ -105,27 +105,39 @@ public class Main {
         }
         
         try {
-//            DSLParser parser = new DSLParser();
-//            Root root = parser.parseDSL(dslText);
+            DSLParser parser = new DSLParser();
+            Root root = parser.parseDSL(dslText);
+
+            // Find the first composite workflow
+            CompositeWorkflow compositeWorkflow = null;
+            for (Workflow wf : root.getWorkflows()) {
+                if (wf instanceof CompositeWorkflow) {
+                    compositeWorkflow = (CompositeWorkflow) wf;
+                    break;
+                }
+            }
+
+            if (compositeWorkflow == null) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body("{\"error\": \"No composite workflow found in DSL\"}");
+            }
+
+            // Collect all assembled workflows that inherit from this composite workflow
+            java.util.List<eu.extremexp.dsl.xDSL.AssembledWorkflow> assembledWorkflows = new java.util.ArrayList<>();
+            for (Workflow wf : root.getWorkflows()) {
+                if (wf instanceof eu.extremexp.dsl.xDSL.AssembledWorkflow) {
+                    eu.extremexp.dsl.xDSL.AssembledWorkflow aw = (eu.extremexp.dsl.xDSL.AssembledWorkflow) wf;
+                    if (aw.getParent() == compositeWorkflow) {
+                        assembledWorkflows.add(aw);
+                    }
+                }
+            }
+
+//            eu.extremexp.dms.converter.WorkflowsToJSONConverter converter =
+//                new eu.extremexp.dms.converter.WorkflowsToJSONConverter(compositeWorkflow, assembledWorkflows);
+//            String jsonResult = converter.convertToJSON();
 //
-//            // Find the first composite workflow
-//            Workflow workflow = null;
-//            for (Workflow wf : root.getWorkflows()) {
-//                if (wf instanceof CompositeWorkflow) {
-//                    workflow = wf;
-//                    break;
-//                }
-//            }
-//
-//            if (workflow == null) {
-//                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-//                        .body("{\"error\": \"No workflow found in DSL\"}");
-//            }
-//
-//            WorkflowToJSONConverter converter = new WorkflowToJSONConverter();
-//            String jsonResult = converter.convertToJSON(workflow);
-            
-            return ResponseEntity.ok("NOT IMPLEMENTED YET");
+            return ResponseEntity.ok("");
             
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

@@ -4,9 +4,6 @@ WORKDIR /app
 
 COPY . .
 
-RUN git submodule update --init --recursive
-
-
 RUN mvn -f extremexp-dsl-framework/eu.extremexp.dsl.parent/pom.xml  clean install
 
 # 4) Build the DMS Spring Boot app

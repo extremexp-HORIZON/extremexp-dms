@@ -1,0 +1,107 @@
+{
+  "edges": [
+    {
+      "data": {},
+      "id": "3FBnMQuZSmqT1q1aq9TDy",
+      "markerEnd": {
+        "color": "#000",
+        "height": 20,
+        "type": "arrow",
+        "width": 20
+      },
+      "source": "start-iiNBismGoLpkxYomaj-Gi",
+      "sourceHandle": null,
+      "style": {
+        "stroke": "#000",
+        "strokeWidth": 1.5
+      },
+      "target": "task-wBMCLdQLPZz4cNXnmsV_C",
+      "targetHandle": "t-top",
+      "type": "regular"
+    },
+    {
+      "data": {},
+      "id": "E42nAQnx57TNzwz9Ly3iB",
+      "markerEnd": {
+        "color": "#000",
+        "height": 20,
+        "type": "arrow",
+        "width": 20
+      },
+      "source": "task-wBMCLdQLPZz4cNXnmsV_C",
+      "sourceHandle": "s-bottom",
+      "style": {
+        "stroke": "#000",
+        "strokeWidth": 1.5
+      },
+      "target": "end-XWQuEBF46Ug0oZpocIajO",
+      "targetHandle": null,
+      "type": "regular"
+    }
+  ],
+  "nodes": [
+    {
+      "data": {},
+      "dragging": false,
+      "height": 31,
+      "id": "start-iiNBismGoLpkxYomaj-Gi",
+      "position": {
+        "x": 222.5,
+        "y": 113.5
+      },
+      "positionAbsolute": {
+        "x": 222.5,
+        "y": 113.5
+      },
+      "selected": false,
+      "type": "start",
+      "width": 31
+    },
+    {
+      "data": {},
+      "height": 32,
+      "id": "end-XWQuEBF46Ug0oZpocIajO",
+      "position": {
+        "x": 664.5,
+        "y": 246.5
+      },
+      "type": "end",
+      "width": 32
+    },
+    {
+      "data": {
+        "currentVariant": "variant-1-QFCQzj5CXHpeFY6qGXeYc",
+        "variants": [
+          {
+            "description": "no description",
+            "graphical_model": {
+              "edges": [],
+              "nodes": []
+            },
+            "id_task": "variant-1-QFCQzj5CXHpeFY6qGXeYc",
+            "implementationRef": "",
+            "isAbstract": true,
+            "is_composite": false,
+            "name": "wt",
+            "parameters": [],
+            "variant": 1
+          }
+        ]
+      },
+      "dragging": false,
+      "height": 44,
+      "id": "task-wBMCLdQLPZz4cNXnmsV_C",
+      "position": {
+        "x": 392,
+        "y": 283
+      },
+      "positionAbsolute": {
+        "x": 392,
+        "y": 283
+      },
+      "selected": false,
+      "type": "task",
+      "width": 100
+    }
+  ]
+}

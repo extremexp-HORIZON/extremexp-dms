@@ -101,21 +101,7 @@ public class WorkflowsToJSONConverter {
                 node.put("height", 44);
                 node.put("dragging", false);
                 node.put("selected", false);
-
-                // Create task data with variants
-                ObjectNode taskData = objectMapper.createObjectNode();
-//                ArrayNode variants = createTaskVariants(jNode);
-                ArrayNode variants = objectMapper.createArrayNode();
-                taskData.set("variants", variants);
-
-//                if (variants.size() > 0) {
-//                    JsonNode firstVariant = variants.get(0);
-//                    if (firstVariant.has("id_task")) {
-//                        taskData.put("currentVariant", firstVariant.get("id_task").asText());
-//                    }
-//                }
-
-                node.set("data", taskData);
+                node.set("data", jNode.data());
                 setPosition(node, xPosition, yPosition);
                 xPosition += 150;
                 break;

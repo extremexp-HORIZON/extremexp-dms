@@ -90,11 +90,11 @@ public class Main {
     }
 
     @PostMapping(
-            value = "/api/dsl2json",
+            value = "/api/workflow2json",
             consumes = MediaType.TEXT_PLAIN_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<String> workflowDsl2json(@RequestBody String dslText) {
+    public ResponseEntity<String> workflow2json(@RequestBody String dslText) {
         if (dslText == null || dslText.isBlank()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("{\"error\": \"Missing DSL text\"}");

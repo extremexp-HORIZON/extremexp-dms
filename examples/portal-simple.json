@@ -1,0 +1,113 @@
+{
+  "edges": [
+    {
+      "data": {},
+      "id": "nBZNzWU1vDvSqu1JH_2iA",
+      "markerEnd": {
+        "color": "#000",
+        "height": 20,
+        "type": "arrow",
+        "width": 20
+      },
+      "source": "start-vs1SGtc_Z-nIxwozuo3or",
+      "sourceHandle": null,
+      "style": {
+        "stroke": "#000",
+        "strokeWidth": 1.5
+      },
+      "target": "task-7DIZfeOlruNtvQTug30DC",
+      "targetHandle": "t-top",
+      "type": "regular"
+    },
+    {
+      "data": {},
+      "id": "oCoqGtzHVU5zHqL9Xpkgc",
+      "markerEnd": {
+        "color": "#000",
+        "height": 20,
+        "type": "arrow",
+        "width": 20
+      },
+      "source": "task-7DIZfeOlruNtvQTug30DC",
+      "sourceHandle": "s-bottom",
+      "style": {
+        "stroke": "#000",
+        "strokeWidth": 1.5
+      },
+      "target": "end-jEPQ4aaqwFjdX7MqWbvXN",
+      "targetHandle": null,
+      "type": "regular"
+    }
+  ],
+  "nodes": [
+    {
+      "data": {},
+      "dragging": false,
+      "height": 36,
+      "id": "start-vs1SGtc_Z-nIxwozuo3or",
+      "position": {
+        "x": 179,
+        "y": 122.5
+      },
+      "positionAbsolute": {
+        "x": 179,
+        "y": 122.5
+      },
+      "selected": false,
+      "type": "start",
+      "width": 31
+    },
+    {
+      "data": {
+        "currentVariant": "variant-1-YmohVHySiGY7Eb22Ti3al",
+        "variants": [
+          {
+            "description": "no description",
+            "graphical_model": {
+              "edges": [],
+              "nodes": []
+            },
+            "id_task": "variant-1-YmohVHySiGY7Eb22Ti3al",
+            "implementationRef": "",
+            "isAbstract": true,
+            "is_composite": false,
+            "name": "task",
+            "parameters": [],
+            "variant": 1
+          }
+        ]
+      },
+      "dragging": false,
+      "height": 43,
+      "id": "task-7DIZfeOlruNtvQTug30DC",
+      "position": {
+        "x": 204.5,
+        "y": 219.25
+      },
+      "positionAbsolute": {
+        "x": 204.5,
+        "y": 219.25
+      },
+      "selected": true,
+      "type": "task",
+      "width": 101
+    },
+    {
+      "data": {},
+      "dragging": false,
+      "height": 37,
+      "id": "end-jEPQ4aaqwFjdX7MqWbvXN",
+      "position": {
+        "x": 433,
+        "y": 270.25
+      },
+      "positionAbsolute": {
+        "x": 433,
+        "y": 270.25
+      },
+      "selected": false,
+      "type": "end",
+      "width": 32
+    }
+  ]
+}

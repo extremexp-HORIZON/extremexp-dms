@@ -1,0 +1,12 @@
+workflow test{
+	task ^task;
+	START -> ^task -> END;
+}
+
+workflow test_assembled from test{
+	task ^task{
+		description "no description";
+		implementation "";
+	}
+
+}

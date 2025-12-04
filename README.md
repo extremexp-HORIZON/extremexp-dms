@@ -47,29 +47,76 @@ Environment variables:
 
 Base URL defaults to http://localhost:8866 (change if you override the port).
 
-- POST /api/workflow2dsl?name={optionalName}
-	- Body: JSON blob (graph JSON like examples/med.json)
-	- Response: text/plain DSL content (placeholder format for now)
+### 1. POST /api/workflow2dsl
+
+Convert workflow JSON to DSL format.
+
+- **Consumes**: `application/json`
+- **Produces**: `text/plain`
+- **Query Parameter**: `name` (optional) - Name for the generated workflow
+- **Request Body**: Workflow JSON (graphical format like examples/med.json)
+- **Response**: DSL text content (.xxp format)
 
 Example:
 
 ```powershell
-curl -X POST "http://localhost:8866/api/workflow2dsl?name=myflow"^
-	-H "Content-Type: application/json"^
-	--data-binary @examples/med.json
+curl -X POST "http://localhost:8866/api/workflow2dsl?name=myflow" `
+  -H "Content-Type: application/json" `
+  --data-binary "@examples/med.json"
 ```
 
-- POST /api/dsl2workflow
-	- Body: text/plain (DSL)
-	- Response: application/json (placeholder; 501 Not Implemented)
+### 2. POST /api/workflow2json
 
-- POST /api/experiment2dsl
-	- Body: application/json (experiment JSON)
-	- Response: text/plain (placeholder; 501 Not Implemented)
+Convert workflow DSL to JSON format.
 
-- POST /api/dsl2experiment
-	- Body: text/plain (DSL)
-	- Response: application/json (placeholder; 501 Not Implemented)
+- **Consumes**: `text/plain`
+- **Produces**: `application/json`
+- **Request Body**: DSL text content (.xxp format)
+- **Response**: Workflow JSON (graphical format)
+
+Example:
+
+```powershell
+curl -X POST "http://localhost:8866/api/workflow2json" `
+  -H "Content-Type: text/plain" `
+  --data-binary "@examples/med.xxp"
+```
+
+### 3. POST /api/experiment2dsl
+
+Convert experiment JSON to DSL format.
+
+- **Consumes**: `application/json`
+- **Produces**: `text/plain`
+- **Query Parameter**: `scope` (optional) - Scope of conversion: `root` (default), `experiment`, or `workflow`
+- **Request Body**: Experiment JSON
+- **Response**: DSL text content (.xxp format)
+
+Example:
+
+```powershell
+curl -X POST "http://localhost:8866/api/experiment2dsl?scope=root" `
+  -H "Content-Type: application/json" `
+  --data-binary "@examples/experiment.json"
+```
+
+### 4. POST /api/experiment2json
+
+Convert experiment DSL to JSON format.
+
+- **Consumes**: `text/plain`
+- **Produces**: `application/json`
+- **Request Body**: DSL text content (.xxp format)
+- **Response**: Experiment JSON
+- **Status**: Work in progress
+
+Example:
+
+```powershell
+curl -X POST "http://localhost:8866/api/experiment2json" `
+  -H "Content-Type: text/plain" `
+  --data-binary "@examples/experiment.xxp"
+```
 
 ## Notes
 

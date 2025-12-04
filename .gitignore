@@ -25,6 +25,9 @@ dist/
 .DS_Store
 Thumbs.db
 
+# Maven build output
+target/
+
 # java built
 *.class
 *.lst

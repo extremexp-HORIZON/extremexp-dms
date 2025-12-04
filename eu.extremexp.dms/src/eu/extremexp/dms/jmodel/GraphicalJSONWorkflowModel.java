@@ -144,40 +144,117 @@ public class GraphicalJSONWorkflowModel  implements Iterable<Workflow>{
 
     }
 
-    private ArrayList<String> createChain(JNode startNode, JNode endNode, List<JEdge> edges){
-        ArrayList<String> sortedIDs = new ArrayList<>();
-        String item = startNode.id();
+    private List<LinkedList<String>> createChain(List<JEdge> edges){
+        
+        List<JEdge> starts = new ArrayList<>();
+        List<JEdge> ends = new ArrayList<>();
+        List<JEdge> tasks = new ArrayList<>();
 
+        // Separate edges into starts, ends, and task connections
+        for (JEdge jEdge : edges){
+           if (jEdge.sourceId().startsWith("start")){
+                starts.add(jEdge);
+           } else if (jEdge.targetId().startsWith("end")){
+                ends.add(jEdge);
+           } else {
+                tasks.add(jEdge);
+           }
+        }
 
-        while (!item.equals(endNode.id())){
-            for (var edge : edges){
-                if (edge.type().equals("regular")) {
-                    if (item.equals(edge.sourceId())) {
-                        sortedIDs.add(item);
-                        item = edge.targetId();
-                        break;
-                    }
+        List<LinkedList<String>> linkedLists = new ArrayList<>();
+        
+        // For each start-end combination, find all paths
+        for (JEdge start : starts) {
+            for (JEdge end : ends) {
+                // Find all paths from start.targetId to end.sourceId through tasks
+                List<List<String>> paths = findAllPaths(start.targetId(), end.sourceId(), tasks);
+                
+                // Create chains for each path
+                for (List<String> path : paths) {
+                    LinkedList<String> chain = new LinkedList<>();
+                    chain.add(start.sourceId());  // start node
+                    chain.addAll(path);           // intermediate tasks
+                    chain.add(end.targetId());    // end node
+                    linkedLists.add(chain);
                 }
             }
-
         }
-        sortedIDs.add(endNode.id());
-        return sortedIDs;
+
+        return linkedLists;
+    }
+
+    /**
+     * Find all paths from startTaskId to endTaskId through the given task edges.
+     * Uses DFS to explore all possible paths.
+     */
+    private List<List<String>> findAllPaths(String startTaskId, String endTaskId, List<JEdge> taskEdges) {
+        List<List<String>> allPaths = new ArrayList<>();
+        List<String> currentPath = new ArrayList<>();
+        Set<String> visited = new HashSet<>();
+        
+        currentPath.add(startTaskId);
+        visited.add(startTaskId);
+        
+        dfsPathFinder(startTaskId, endTaskId, taskEdges, currentPath, visited, allPaths);
+        
+        return allPaths;
+    }
+
+    /**
+     * DFS helper to find all paths from current node to target.
+     */
+    private void dfsPathFinder(String current, String target, List<JEdge> edges, 
+                               List<String> currentPath, Set<String> visited, 
+                               List<List<String>> allPaths) {
+        if (current.equals(target)) {
+            // Found a complete path
+            allPaths.add(new ArrayList<>(currentPath));
+            return;
+        }
+        
+        // Find all edges starting from current node
+        for (JEdge edge : edges) {
+            if (edge.sourceId().equals(current) && !visited.contains(edge.targetId())) {
+                // Visit the next node
+                visited.add(edge.targetId());
+                currentPath.add(edge.targetId());
+                
+                dfsPathFinder(edge.targetId(), target, edges, currentPath, visited, allPaths);
+                
+                // Backtrack
+                currentPath.remove(currentPath.size() - 1);
+                visited.remove(edge.targetId());
+            }
+        }
     }
 
 
     private void addRegularLinks(GCompositeWorkflow  gCompositeWorkflow, JNode startNode, JNode endNode, XDSLFactory factory, List<JEdge> edges) {
-        GChainLink chainLink = new GChainLink(factory);
-        ArrayList<String> arrayList = createChain(startNode, endNode, edges);
-
-        chainLink.start((GEvent) gIDs.get(arrayList.getFirst()));
-        for(int i = 1; i< arrayList.toArray().length - 1; i++){
-            chainLink.addTasks(factory, (GTask) gIDs.get(arrayList.get(i)));
-
+        List<JEdge> regularEdges = new ArrayList<>();
+        for (JEdge edge : edges){
+            if (edge.type().equals("regular")){
+                regularEdges.add(edge);
+            }
         }
-        chainLink.end((GEvent) gIDs.get(arrayList.getLast()));
-        gCompositeWorkflow.addChainLink(chainLink);
 
+        // Create all possible chains from starts through tasks to ends
+        List<LinkedList<String>> chains = createChain(regularEdges);
+
+        // Create a ChainLink for each chain
+        for (LinkedList<String> chain : chains) {
+            GChainLink chainLink = new GChainLink(factory);
+
+            for(String item : chain){
+                if (item.startsWith("start")){
+                    chainLink.start(new GEvent(EventValue.START, factory));
+                } else if (item.startsWith("end")) {
+                    chainLink.end(new GEvent(EventValue.END, factory));
+                } else {
+                    chainLink.addTasks(factory, (GTask) gIDs.get(item));
+                }
+            }
+            gCompositeWorkflow.addChainLink(chainLink);
+        }
     }
 //
 //

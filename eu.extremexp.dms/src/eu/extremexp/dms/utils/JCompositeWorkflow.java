@@ -56,33 +56,47 @@ public class JCompositeWorkflow {
         ObjectMapper objectMapper = new ObjectMapper(new JsonFactory());
         ObjectNode jsonNode = objectMapper.createObjectNode();
         jsonNode.put("description", taskConfiguration.getTaskConfiguration().getDescription());
-        jsonNode.put("implementationRef", taskConfiguration.getTask().getName());
+        jsonNode.put("implementationRef", taskConfiguration.getTaskConfiguration().getPrimitiveImplementation());
         jsonNode.put("isAbstract", true);
         jsonNode.put("is_composite", false);
         jsonNode.put("name", taskConfiguration.getTask().getName());
+        jsonNode.put("id_task", "variant-"+taskConfiguration.getTask().getName() +"-"+variantCounter);
 
         ArrayNode params = createParams(taskConfiguration.getTaskConfiguration().getParams());
-
+        jsonNode.set("parameters", params);
 
         jsonNode.put("variant", variantCounter);
         return jsonNode;
 
     }
 
-    public void populateNodes(List<AssembledWorkflow> assembledWorkflowList){
+    public void populateNodes(List<AssembledWorkflow> assembledWorkflowList, ObjectMapper objectMapper){
         assert compositeWorkflow != null;
         for (Task task : compositeWorkflow.getTasks()){
-                JNode jNode = new JNode(task.getName(), "task", null );
-                jNodes.putIfAbsent(task.getName(), jNode);
+
+
                 int variantCounter = 0;
+                String currentVariant = null;
+                ArrayNode variants = objectMapper.createArrayNode();
 
                 for (AssembledWorkflow assembledWorkflow : assembledWorkflowList){
                     for (TaskConfiguration taskConfiguration : assembledWorkflow.getTaskConfigurations()){
                         if (taskConfiguration.getTask() == task){
-                            JsonNode jsonNode = createVariant(taskConfiguration, variantCounter++);
+                            JsonNode jsonNode = createVariant(taskConfiguration, ++variantCounter);
+                            currentVariant = jsonNode.get("id_task").asText();
+                            variants.add(jsonNode);
                         }
                     }
                 }
+
+                ObjectNode dataNode = objectMapper.createObjectNode();
+                if (variantCounter > 0 && currentVariant != null){
+                    dataNode.put("currentVariant", currentVariant);
+                    dataNode.set("variants", variants);
+                }
+
+                JNode jNode = new JNode(task.getName(), "task", dataNode );
+                jNodes.putIfAbsent(task.getName(), jNode);
 
         }
         for (InputData data : compositeWorkflow.getInputs()){

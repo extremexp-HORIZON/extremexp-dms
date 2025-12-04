@@ -18,140 +18,141 @@ import java.util.Map;
 import java.util.UUID;
 
 public class WorkflowsToJSONConverter {
-//
-//    private final CompositeWorkflow compositeWorkflow;
-//    private final List<AssembledWorkflow> assembledWorkflows;
-//    private final ObjectMapper objectMapper;
-//    private final Map<String, String> nodeIdMap; // Maps node name to generated ID
-//    private int xPosition = 100;
-//    private int yPosition = 100;
-//
-//    public WorkflowsToJSONConverter(CompositeWorkflow compositeWorkflow, List<AssembledWorkflow> assembledWorkflows) {
-//        this.compositeWorkflow = compositeWorkflow;
-//        this.assembledWorkflows = assembledWorkflows;
-//        this.objectMapper = new ObjectMapper();
-//        this.nodeIdMap = new HashMap<>();
-//    }
-//
+
+    private final CompositeWorkflow compositeWorkflow;
+    private final List<AssembledWorkflow> assembledWorkflows;
+    private final ObjectMapper objectMapper;
+    private final Map<String, String> nodeIdMap; // Maps node name to generated ID
+    private int xPosition = 100;
+    private int yPosition = 100;
+
+    public WorkflowsToJSONConverter(CompositeWorkflow compositeWorkflow, List<AssembledWorkflow> assembledWorkflows) {
+        this.compositeWorkflow = compositeWorkflow;
+        this.assembledWorkflows = assembledWorkflows;
+        this.objectMapper = new ObjectMapper();
+        this.nodeIdMap = new HashMap<>();
+    }
+
 //    /**
 //     * Convert the workflows to JSON format matching the structure of med.json
 //     */
-//    public ObjectNode convertToJSON() throws JsonProcessingException {
+    public ObjectNode convertToJSON() throws JsonProcessingException {
 //        // Use JCompositeWorkflow to extract nodes and edges
-//        JCompositeWorkflow jCompositeWorkflow = new JCompositeWorkflow(compositeWorkflow);
-//        jCompositeWorkflow.populateNodes(assembledWorkflows);
-//        jCompositeWorkflow.populateEdges();
+        JCompositeWorkflow jCompositeWorkflow = new JCompositeWorkflow(compositeWorkflow);
+        jCompositeWorkflow.populateNodes(assembledWorkflows, this.objectMapper);
+        jCompositeWorkflow.populateEdges();
 //
-//        ObjectNode result = objectMapper.createObjectNode();
-//        ArrayNode nodesArray = objectMapper.createArrayNode();
-//        ArrayNode edgesArray = objectMapper.createArrayNode();
+        ObjectNode result = objectMapper.createObjectNode();
+        ArrayNode nodesArray = objectMapper.createArrayNode();
+        ArrayNode edgesArray = objectMapper.createArrayNode();
 //
 //        // Convert JNodes to JSON nodes
-//        for (JNode jNode : jCompositeWorkflow.jNodes.values()) {
-//            ObjectNode nodeJson = createNodeFromJNode(jNode);
-//            nodesArray.add(nodeJson);
-//        }
+        for (JNode jNode : jCompositeWorkflow.jNodes.values()) {
+            ObjectNode nodeJson = createNodeFromJNode(jNode);
+            nodesArray.add(nodeJson);
+        }
+
+        // Convert JEdges to JSON edges
+        for (JEdge jEdge : jCompositeWorkflow.jEdges.values()) {
+            ObjectNode edgeJson = createEdgeFromJEdge(jEdge);
+            edgesArray.add(edgeJson);
+        }
+
+        result.set("nodes", nodesArray);
+        result.set("edges", edgesArray);
+
+        return result;
+    }
 //
-//        // Convert JEdges to JSON edges
-//        for (JEdge jEdge : jCompositeWorkflow.jEdges.values()) {
-//            ObjectNode edgeJson = createEdgeFromJEdge(jEdge);
-//            edgesArray.add(edgeJson);
-//        }
-//
-//        result.set("nodes", nodesArray);
-//        result.set("edges", edgesArray);
-//
-//        return result;
-//    }
-//
-//    private ObjectNode createNodeFromJNode(JNode jNode) {
-//        ObjectNode node = objectMapper.createObjectNode();
-//
-//        String nodeId;
-//        switch (jNode.type()) {
-//            case "start":
-//                nodeId = "start-" + generateRandomId();
-//                node.put("id", nodeId);
-//                node.put("type", "start");
-//                node.put("width", 31);
-//                node.put("height", 36);
-//                node.put("dragging", false);
-//                node.put("selected", false);
-//                node.set("data", objectMapper.createObjectNode());
-//                setPosition(node, -173.5, -81);
-//                break;
-//
-//            case "end":
-//                nodeId = "end-" + generateRandomId();
-//                node.put("id", nodeId);
-//                node.put("type", "end");
-//                node.put("width", 32);
-//                node.put("height", 37);
-//                node.put("dragging", false);
-//                node.put("selected", false);
-//                node.set("data", objectMapper.createObjectNode());
-//                setPosition(node, 514.5, 362.75);
-//                break;
-//
-//            case "task":
-//                nodeId = "task-" + generateRandomId();
-//                node.put("id", nodeId);
-//                node.put("type", "task");
-//                node.put("width", 102);
-//                node.put("height", 44);
-//                node.put("dragging", false);
-//                node.put("selected", false);
-//
-//                // Create task data with variants
-//                ObjectNode taskData = objectMapper.createObjectNode();
+    private ObjectNode createNodeFromJNode(JNode jNode) {
+        ObjectNode node = objectMapper.createObjectNode();
+
+        String nodeId;
+        switch (jNode.type()) {
+            case "start":
+                nodeId = "start-" + generateRandomId();
+                node.put("id", nodeId);
+                node.put("type", "start");
+                node.put("width", 31);
+                node.put("height", 36);
+                node.put("dragging", false);
+                node.put("selected", false);
+                node.set("data", objectMapper.createObjectNode());
+                setPosition(node, -173.5, -81);
+                break;
+
+            case "end":
+                nodeId = "end-" + generateRandomId();
+                node.put("id", nodeId);
+                node.put("type", "end");
+                node.put("width", 32);
+                node.put("height", 37);
+                node.put("dragging", false);
+                node.put("selected", false);
+                node.set("data", objectMapper.createObjectNode());
+                setPosition(node, 514.5, 362.75);
+                break;
+
+            case "task":
+                nodeId = "task-" + generateRandomId();
+                node.put("id", nodeId);
+                node.put("type", "task");
+                node.put("width", 102);
+                node.put("height", 44);
+                node.put("dragging", false);
+                node.put("selected", false);
+
+                // Create task data with variants
+                ObjectNode taskData = objectMapper.createObjectNode();
 //                ArrayNode variants = createTaskVariants(jNode);
-//                taskData.set("variants", variants);
-//
+                ArrayNode variants = objectMapper.createArrayNode();
+                taskData.set("variants", variants);
+
 //                if (variants.size() > 0) {
 //                    JsonNode firstVariant = variants.get(0);
 //                    if (firstVariant.has("id_task")) {
 //                        taskData.put("currentVariant", firstVariant.get("id_task").asText());
 //                    }
 //                }
-//
-//                node.set("data", taskData);
-//                setPosition(node, xPosition, yPosition);
-//                xPosition += 150;
-//                break;
-//
-//            case "data":
-//                nodeId = "data-" + generateRandomId();
-//                node.put("id", nodeId);
-//                node.put("type", "data");
-//                node.put("width", 102);
-//                node.put("height", 77);
-//                node.put("dragging", false);
-//                node.put("selected", false);
-//
-//                // Set data fields from data field (the third parameter in JNode record)
-//                ObjectNode dataContent = objectMapper.createObjectNode();
-//                if (jNode.data() != null) {
-//                    if (jNode.data().has("name")) {
-//                        dataContent.put("name", jNode.data().get("name").asText());
-//                    }
-//                    if (jNode.data().has("field")) {
-//                        dataContent.put("field", jNode.data().get("field").asText());
-//                    }
-//                }
-//                node.set("data", dataContent);
-//                setPosition(node, xPosition, yPosition + 100);
-//                xPosition += 150;
-//                break;
-//
-//            default:
-//                nodeId = "node-" + generateRandomId();
-//                node.put("id", nodeId);
-//                node.put("type", jNode.type());
-//        }
-//
-//        nodeIdMap.put(jNode.id(), nodeId);
-//        return node;
-//    }
+
+                node.set("data", taskData);
+                setPosition(node, xPosition, yPosition);
+                xPosition += 150;
+                break;
+
+            case "data":
+                nodeId = "data-" + generateRandomId();
+                node.put("id", nodeId);
+                node.put("type", "data");
+                node.put("width", 102);
+                node.put("height", 77);
+                node.put("dragging", false);
+                node.put("selected", false);
+
+                // Set data fields from data field (the third parameter in JNode record)
+                ObjectNode dataContent = objectMapper.createObjectNode();
+                if (jNode.data() != null) {
+                    if (jNode.data().has("name")) {
+                        dataContent.put("name", jNode.data().get("name").asText());
+                    }
+                    if (jNode.data().has("field")) {
+                        dataContent.put("field", jNode.data().get("field").asText());
+                    }
+                }
+                node.set("data", dataContent);
+                setPosition(node, xPosition, yPosition + 100);
+                xPosition += 150;
+                break;
+
+            default:
+                nodeId = "node-" + generateRandomId();
+                node.put("id", nodeId);
+                node.put("type", jNode.type());
+        }
+
+        nodeIdMap.put(jNode.id(), nodeId);
+        return node;
+    }
 //
 //    private ArrayNode createTaskVariants(JNode taskNode) {
 //        ArrayNode variants = objectMapper.createArrayNode();
@@ -271,55 +272,54 @@ public class WorkflowsToJSONConverter {
 //        return variants;
 //    }
 //
-//    private ObjectNode createEdgeFromJEdge(JEdge jEdge) {
-//        ObjectNode edge = objectMapper.createObjectNode();
-//
-//        edge.put("id", generateRandomId());
-//        edge.put("type", jEdge.type());
-//
-//        String sourceId = nodeIdMap.get(jEdge.sourceId());
-//        String targetId = nodeIdMap.get(jEdge.targetId());
-//
-//        edge.put("source", sourceId);
-//        edge.put("target", targetId);
-//
-//        if (jEdge.type().equals("regular")) {
-//            edge.put("sourceHandle", "s-bottom");
-//            edge.put("targetHandle", "t-top");
-//        } else if (jEdge.type().equals("dataflow")) {
-//            edge.put("animated", true);
-//            edge.put("sourceHandle", "s-bottom");
-//            edge.put("targetHandle", "t-top");
-//        }
-//
-//        // Add style
-//        ObjectNode style = objectMapper.createObjectNode();
-//        style.put("stroke", "#000");
-//        style.put("strokeWidth", 1.5);
-//        edge.set("style", style);
-//
-//        // Add markerEnd
-//        ObjectNode markerEnd = objectMapper.createObjectNode();
-//        markerEnd.put("type", "arrow");
-//        markerEnd.put("color", "#000");
-//        markerEnd.put("width", 20);
-//        markerEnd.put("height", 20);
-//        edge.set("markerEnd", markerEnd);
-//
-//        edge.set("data", objectMapper.createObjectNode());
-//
-//        return edge;
-//    }
-//
-//    private void setPosition(ObjectNode node, double x, double y) {
-//        ObjectNode position = objectMapper.createObjectNode();
-//        position.put("x", x);
-//        position.put("y", y);
-//        node.set("position", position);
-//        node.set("positionAbsolute", position);
-//    }
-//
-//    private String generateRandomId() {
-//        return UUID.randomUUID().toString().replace("-", "").substring(0, 21);
-//    }
+    private ObjectNode createEdgeFromJEdge(JEdge jEdge) {
+        ObjectNode edge = objectMapper.createObjectNode();
+
+        edge.put("id", generateRandomId());
+        edge.put("type", jEdge.type());
+
+        String sourceId = nodeIdMap.get(jEdge.sourceId());
+        String targetId = nodeIdMap.get(jEdge.targetId());
+
+        edge.put("source", sourceId);
+        edge.put("target", targetId);
+
+        if (jEdge.type().equals("regular")) {
+            edge.put("sourceHandle", "s-bottom");
+            edge.put("targetHandle", "t-top");
+        } else if (jEdge.type().equals("dataflow")) {
+            edge.put("animated", true);
+            edge.put("sourceHandle", "s-bottom");
+            edge.put("targetHandle", "t-top");
+        }
+
+        // Add style
+        ObjectNode style = objectMapper.createObjectNode();
+        style.put("stroke", "#000");
+        style.put("strokeWidth", 1.5);
+        edge.set("style", style);
+
+        // Add markerEnd
+        ObjectNode markerEnd = objectMapper.createObjectNode();
+        markerEnd.put("type", "arrow");
+        markerEnd.put("color", "#000");
+        markerEnd.put("width", 20);
+        markerEnd.put("height", 20);
+        edge.set("markerEnd", markerEnd);
+
+        edge.set("data", objectMapper.createObjectNode());
+
+        return edge;
+    }
+
+    private void setPosition(ObjectNode node, double x, double y) {
+        ObjectNode position = objectMapper.createObjectNode();
+        position.put("x", x);
+        position.put("y", y);
+        node.set("position", position);
+        node.set("positionAbsolute", position);
+    }
+    private String generateRandomId() {
+        return UUID.randomUUID().toString().substring(0, 21);
+    }
 }

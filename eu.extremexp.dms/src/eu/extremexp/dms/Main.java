@@ -1,11 +1,9 @@
 package eu.extremexp.dms;
 
+
 import eu.extremexp.dms.jmodel.GraphicalJSONWorkflowModel;
 import eu.extremexp.dms.utils.ExperimentJSONParser;
 import eu.extremexp.dsl.xDSL.Workflow;
-import eu.extremexp.dsl.xDSL.Root;
-import eu.extremexp.dsl.xDSL.Experiment;
-import eu.extremexp.dsl.xDSL.CompositeWorkflow;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 
 import eu.extremexp.dms.utils.WorkflowJSONParser;
-import eu.extremexp.dms.utils.DSLParser;
 import eu.extremexp.dms.converter.WorkflowToJSONConverter;
-import eu.extremexp.dms.converter.ExperimentToJSONConverter;
 
 @SpringBootApplication
 @RestController
@@ -94,7 +90,7 @@ public class Main {
     }
 
     @PostMapping(
-            value = "/api/workflow/dsl2json",
+            value = "/api/dsl2json",
             consumes = MediaType.TEXT_PLAIN_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
@@ -105,39 +101,10 @@ public class Main {
         }
         
         try {
-            DSLParser parser = new DSLParser();
-            Root root = parser.parseDSL(dslText);
+            XDSLModelIO xdslModelIO = new XDSLModelIO(dslText);
+            String jsonBody = WorkflowToJSONConverter.ConvertOneWorkflow(xdslModelIO.getRoot());
 
-            // Find the first composite workflow
-            CompositeWorkflow compositeWorkflow = null;
-            for (Workflow wf : root.getWorkflows()) {
-                if (wf instanceof CompositeWorkflow) {
-                    compositeWorkflow = (CompositeWorkflow) wf;
-                    break;
-                }
-            }
-
-            if (compositeWorkflow == null) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                        .body("{\"error\": \"No composite workflow found in DSL\"}");
-            }
-
-            // Collect all assembled workflows that inherit from this composite workflow
-            java.util.List<eu.extremexp.dsl.xDSL.AssembledWorkflow> assembledWorkflows = new java.util.ArrayList<>();
-            for (Workflow wf : root.getWorkflows()) {
-                if (wf instanceof eu.extremexp.dsl.xDSL.AssembledWorkflow) {
-                    eu.extremexp.dsl.xDSL.AssembledWorkflow aw = (eu.extremexp.dsl.xDSL.AssembledWorkflow) wf;
-                    if (aw.getParent() == compositeWorkflow) {
-                        assembledWorkflows.add(aw);
-                    }
-                }
-            }
-
-//            eu.extremexp.dms.converter.WorkflowsToJSONConverter converter =
-//                new eu.extremexp.dms.converter.WorkflowsToJSONConverter(compositeWorkflow, assembledWorkflows);
-//            String jsonResult = converter.convertToJSON();
-//
-            return ResponseEntity.ok("");
+            return ResponseEntity.ok(jsonBody);
             
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

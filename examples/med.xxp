@@ -1,4 +1,4 @@
- workflow dragon{
+ workflow med{
 	input data abc;
 	output data xyz;
 	task TrainModel;
@@ -15,7 +15,7 @@
 	AddPadding . xyz --> xyz;
 }
 
-workflow dragon_assembled from dragon{
+workflow med_assembled from med{
 	task TrainModel{
 		description "no description";
 		implementation "TrainModel";
@@ -28,7 +28,7 @@ workflow dragon_assembled from dragon{
 
 }
 
-workflow dragon_assembled_1 from dragon{
+workflow med_assembled_1 from med{
 	task TrainModel{
 		description "no description";
 		implementation "TrainModel";
@@ -41,7 +41,7 @@ workflow dragon_assembled_1 from dragon{
 
 }
 
-workflow dragon_assembled_2 from dragon{
+workflow med_assembled_2 from med{
 	task TrainModel{
 		description "no description";
 		implementation "TrainModel";
@@ -54,7 +54,7 @@ workflow dragon_assembled_2 from dragon{
 
 }
 
-workflow dragon_assembled_3 from dragon{
+workflow med_assembled_3 from med{
 	task TrainModel{
 		param abc;
 		param def = 123;
@@ -73,7 +73,7 @@ workflow dragon_assembled_3 from dragon{
 
 }
 
-workflow dragon_assembled_4 from dragon{
+workflow med_assembled_4 from med{
 	task TrainModel{
 		param abc;
 		param def = 123;
@@ -92,7 +92,7 @@ workflow dragon_assembled_4 from dragon{
 
 }
 
-workflow dragon_assembled_5 from dragon{
+workflow med_assembled_5 from med{
 	task TrainModel{
 		param abc;
 		param def = 123;

@@ -2,6 +2,8 @@ package eu.extremexp.dms;
 
 
 import eu.extremexp.dms.converter.RootToJSONConvertor;
+import eu.extremexp.dms.converter.WorkflowToJSONConverter;
+import eu.extremexp.dms.converter.WorkflowsToJSONConverter;
 import eu.extremexp.dms.jmodel.GraphicalJSONWorkflowModel;
 import eu.extremexp.dms.utils.ExperimentJSONParser;
 import eu.extremexp.dms.utils.JEdge;
@@ -29,7 +31,7 @@ public class MainDebug {
 //            }
 //            String dsl = stringBuilder.toString();
 //            XDSLModelIO xdslModelIO = new XDSLModelIO(dsl);
-//            RootToJSONConvertor rootToJSONConvertor = new RootToJSONConvertor(xdslModelIO.getRoot());
+//            System.out.println(WorkflowToJSONConverter.ConvertOneWorkflow(xdslModelIO.getRoot()));
 //
 //
 //
@@ -59,6 +61,7 @@ public class MainDebug {
             for (Workflow wf : graphicalJSONWorkflowModel){
                 graphicalJSONModel.addWorkflow(wf);
             }
+
 
             System.out.println(graphicalJSONModel.getRootDSL());
         }
